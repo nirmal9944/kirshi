@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>लिखित परीक्षा — गण्डकी कृषि लोकसेवा</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1208; --parchment:#faf6ee; --paper:#fff9f0;
+  --cream:#f5edda; --tan:#e8d9bc; --rule:#c9b89a;
+  --accent:#8b4513; --accent2:#5c3a1e; --gold:#c9860a;
+  --green:#2d5a1b; --red:#8b1a1a;
+  --blue:#1a3a5c; --muted:#7a6a52;
+  --shadow:rgba(90,60,20,0.18);
+  --border:rgba(139,69,19,0.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Tiro Devanagari Hindi',serif;
+  background:var(--cream);
+  color:var(--ink);
+  min-height:100vh;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(200,180,140,0.18) 27px,rgba(200,180,140,0.18) 28px),
+    radial-gradient(ellipse 120% 80% at 50% 0%,rgba(245,237,218,1) 0%,rgba(232,217,188,1) 100%);
+}
+
+/* ── HEADER ── */
+.exam-header{
+  background:linear-gradient(135deg,var(--accent2) 0%,var(--accent) 60%,#b06020 100%);
+  color:#fff; padding:0; position:sticky; top:0; z-index:100;
+  box-shadow:0 4px 20px rgba(90,58,20,0.4);
+}
+.header-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 10px;
+  border-bottom:1px solid rgba(255,255,255,0.15);
+}
+.header-logo{display:flex;align-items:center;gap:10px;}
+.header-logo .seal{
+  width:36px;height:36px;
+  background:rgba(255,255,255,0.15);
+  border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.header-logo .hl-text{font-size:12px;line-height:1.4;}
+.header-logo .hl-text strong{display:block;font-size:14px;color:#ffd88a;}
+.back-btn{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;padding:7px 14px;border-radius:10px;
+  text-decoration:none;font-size:12px;font-weight:600;
+  transition:all .2s;
+}
+.back-btn:hover{background:rgba(255,255,255,0.22);}
+.header-tabs{
+  display:flex;gap:0;
+  padding:0 16px;
+  overflow-x:auto;
+}
+.tab{
+  padding:10px 16px;font-size:12px;font-weight:600;
+  color:rgba(255,255,255,0.6);border-bottom:3px solid transparent;
+  cursor:pointer;white-space:nowrap;letter-spacing:.5px;
+  text-transform:uppercase;transition:all .2s;
+}
+.tab.active{color:#ffd88a;border-bottom-color:#ffd88a;}
+.tab:hover:not(.active){color:rgba(255,255,255,0.9);}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:720px;margin:0 auto;padding:24px 18px 100px;}
+
+/* ── OFFICIAL NOTICE BOX ── */
+.notice-box{
+  background:var(--paper);
+  border:2px solid var(--rule);
+  border-radius:4px;
+  padding:18px 20px;
+  margin-bottom:24px;
+  position:relative;
+  box-shadow:0 2px 12px var(--shadow);
+}
+.notice-box::before{
+  content:'';position:absolute;
+  top:5px;left:5px;right:5px;bottom:5px;
+  border:1px solid rgba(201,180,154,0.5);
+  border-radius:2px;pointer-events:none;
+}
+.notice-title{
+  font-family:'Fraunces',serif;
+  font-size:15px;font-weight:900;
+  color:var(--accent2);text-align:center;
+  border-bottom:2px double var(--rule);
+  padding-bottom:10px;margin-bottom:12px;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.notice-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;
+  font-size:12.5px;margin-bottom:12px;
+}
+.ng-row{display:flex;gap:6px;}
+.ng-label{color:var(--muted);white-space:nowrap;}
+.ng-val{font-weight:700;color:var(--ink);}
+.notice-rules{
+  border-top:1px solid var(--tan);
+  padding-top:10px;
+  font-size:12px;color:var(--muted);line-height:1.9;
+}
+.notice-rules li{list-style:none;padding-left:0;}
+.notice-rules li::before{content:'• ';color:var(--accent);}
+
+/* ── SECTION LABEL ── */
+.section-label{
+  display:flex;align-items:center;gap:12px;
+  margin:28px 0 14px;
+}
+.sl-mark{
+  background:var(--accent);
+  color:#fff;font-family:'DM Mono',monospace;
+  font-size:11px;font-weight:500;
+  padding:4px 12px;border-radius:3px;
+  letter-spacing:1px;white-space:nowrap;
+}
+.sl-text{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--accent2);}
+.sl-marks{margin-left:auto;background:var(--tan);border-radius:4px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--accent2);}
+.section-divider{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:20px;border-radius:2px;}
+
+/* ── QUESTION CARD ── */
+.q-card{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  margin-bottom:18px;
+  overflow:hidden;
+  box-shadow:0 2px 10px var(--shadow);
+  transition:box-shadow .2s;
+  animation:slideIn .4s ease both;
+}
+.q-card:hover{box-shadow:0 5px 20px rgba(139,69,19,0.15);}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.q-top{
+  display:flex;align-items:flex-start;gap:0;
+  padding:0;
+}
+.q-num{
+  background:var(--accent);
+  color:#fff;
+  font-family:'DM Mono',monospace;
+  font-size:13px;font-weight:500;
+  padding:14px 12px;
+  min-width:44px;text-align:center;
+  align-self:stretch;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding-top:16px;
+  flex-shrink:0;
+}
+.q-body{padding:14px 16px;flex:1;}
+.q-marks-badge{
+  background:var(--gold);color:#fff;
+  font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:500;
+  padding:3px 8px;border-radius:3px;
+  margin-bottom:8px;display:inline-block;
+  letter-spacing:.5px;
+}
+.q-text{
+  font-size:15px;line-height:1.85;
+  color:var(--ink);margin-bottom:0;
+}
+.q-text strong{color:var(--accent2);}
+
+/* Hint panel */
+.hint-toggle{
+  display:flex;align-items:center;gap:8px;
+  margin-top:12px;
+  padding:8px 12px;
+  background:rgba(44,90,27,0.06);
+  border:1px dashed rgba(44,90,27,0.25);
+  border-radius:6px;cursor:pointer;
+  font-size:12px;color:var(--green);
+  font-weight:600;letter-spacing:.3px;
+  transition:all .2s;user-select:none;
+  width:fit-content;
+}
+.hint-toggle:hover{background:rgba(44,90,27,0.12);}
+.hint-toggle .ht-arrow{transition:transform .25s;}
+.hint-toggle.open .ht-arrow{transform:rotate(90deg);}
+.hint-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s cubic-bezier(.4,0,.2,1);
+}
+.hint-panel.open{max-height:500px;}
+.hint-inner{
+  margin-top:10px;
+  background:rgba(44,90,27,0.05);
+  border-left:3px solid var(--green);
+  border-radius:0 8px 8px 0;
+  padding:12px 14px;
+}
+.hint-title{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--green);margin-bottom:8px;font-weight:500;
+}
+.hint-list{font-size:12.5px;line-height:2;color:var(--accent2);}
+.hint-list li{list-style:none;padding-left:0;}
+.hint-list li::before{content:'→ ';color:var(--green);font-weight:700;}
+.hint-keywords{
+  margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;
+}
+.kw{
+  background:rgba(44,90,27,0.1);
+  border:1px solid rgba(44,90,27,0.2);
+  color:var(--green);
+  font-family:'DM Mono',monospace;
+  font-size:10px;padding:2px 8px;border-radius:3px;
+  font-weight:500;
+}
+
+/* Exam tip */
+.exam-tip{
+  display:flex;align-items:flex-start;gap:10px;
+  margin-top:10px;padding:10px 12px;
+  background:rgba(201,134,10,0.07);
+  border:1px solid rgba(201,134,10,0.2);
+  border-radius:6px;font-size:11.5px;
+  color:var(--accent2);line-height:1.7;
+}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+
+/* ── EXAM FORMAT BOX ── */
+.format-box{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:18px 20px;
+  margin-bottom:24px;
+  box-shadow:0 2px 10px var(--shadow);
+}
+.format-box h3{
+  font-family:'Fraunces',serif;
+  font-size:14px;font-weight:900;
+  color:var(--accent2);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.format-steps{counter-reset:step;}
+.format-step{
+  counter-increment:step;
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid var(--tan);
+  font-size:12.5px;line-height:1.7;
+}
+.format-step:last-child{border-bottom:none;}
+.step-num{
+  background:var(--accent);color:#fff;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:11px;
+  flex-shrink:0;margin-top:1px;
+}
+.step-text{color:var(--ink);}
+.step-text strong{color:var(--accent2);}
+
+/* ── ANSWER FORMAT TEMPLATE ── */
+.template-box{
+  background:linear-gradient(135deg,rgba(139,69,19,0.04),rgba(201,134,10,0.04));
+  border:1px dashed var(--rule);
+  border-radius:6px;padding:16px;margin-top:10px;
+  font-size:12px;line-height:1.8;color:var(--muted);
+}
+.template-box .tmpl-title{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;font-weight:500;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:100%;max-width:720px;
+  background:rgba(250,246,238,0.96);
+  border-top:2px solid var(--rule);
+  display:flex;justify-content:space-around;
+  padding:10px 0 16px;z-index:100;
+  backdrop-filter:blur(12px);
+}
+.bnav-item{
+  display:flex;flex-direction:column;
+  align-items:center;gap:3px;
+  text-decoration:none;color:var(--muted);
+  font-size:10px;letter-spacing:.5px;
+  cursor:pointer;padding:4px 16px;
+  border-radius:8px;transition:all .2s;
+}
+.bnav-item:hover{color:var(--accent);}
+.bnav-item.active{color:var(--accent);}
+.bnav-icon{font-size:18px;}
+.bnav-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;margin:0 auto;display:none;}
+.bnav-item.active .bnav-dot{display:block;}
+
+/* ── PRINT BUTTON ── */
+.print-bar{
+  background:var(--accent2);color:#fff;
+  text-align:center;padding:12px;
+  margin-bottom:20px;border-radius:6px;
+  font-size:13px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;box-shadow:0 3px 12px rgba(92,58,30,0.3);
+}
+.print-bar:hover{background:var(--accent);transform:translateY(-1px);}
+
+/* ── PROGRESS COUNTER ── */
+.q-counter{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  background:var(--tan);
+  font-size:11px;color:var(--muted);
+  border-top:1px solid var(--rule);
+}
+.qc-right{font-family:'DM Mono',monospace;color:var(--accent2);font-weight:500;}
+
+/* ── SCROLLTOP ── */
+.scroll-top{
+  position:fixed;bottom:80px;right:20px;
+  width:38px;height:38px;
+  background:var(--accent);color:#fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(139,69,19,0.4);
+  transition:all .2s;opacity:0;pointer-events:none;z-index:200;
+}
+.scroll-top.show{opacity:1;pointer-events:all;}
+.scroll-top:hover{transform:translateY(-2px);}
+
+/* ── SECTION TOGGLE ── */
+.section-toggle-btn{
+  display:flex;align-items:center;gap:8px;
+  background:transparent;border:none;cursor:pointer;
+  font-family:'Fraunces',serif;font-size:17px;font-weight:700;
+  color:var(--accent2);
+}
+.stb-arrow{transition:transform .25s;}
+.section-toggle-btn.collapsed .stb-arrow{transform:rotate(-90deg);}
+.section-content{transition:opacity .3s;}
+.section-content.collapsed{display:none;}
+
+@media print{
+  .exam-header,.bottom-nav,.print-bar,.scroll-top,.hint-toggle,.hint-panel,.exam-tip{display:none!important;}
+  body{background:white!important;background-image:none!important;}
+  .q-card{box-shadow:none!important;border:1px solid #ccc!important;}
+  .main{padding:0!important;}
+}
+
+/* Stagger animation */
+.q-card:nth-child(1){animation-delay:.05s}
+.q-card:nth-child(2){animation-delay:.1s}
+.q-card:nth-child(3){animation-delay:.15s}
+.q-card:nth-child(4){animation-delay:.2s}
+.q-card:nth-child(5){animation-delay:.25s}
+.q-card:nth-child(6){animation-delay:.3s}
+.q-card:nth-child(7){animation-delay:.35s}
+.q-card:nth-child(8){animation-delay:.4s}
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="exam-header">
+  <div class="header-top">
+    <div class="header-logo">
+      <div class="seal">🏛</div>
+      <div class="hl-text">
+        <strong>गण्डकी प्रदेश लोक सेवा आयोग</strong>
+        कृषि सेवा — चौथो तह (लिखित परीक्षा)
+      </div>
+    </div>
+    <a href="index.html" class="back-btn">← गृहपृष्ठ</a>
+  </div>
+  <div class="header-tabs">
+    <div class="tab active" onclick="showSection('all')">सबै प्रश्न</div>
+    <div class="tab" onclick="showSection('short')">लघु उत्तर (५ अंक)</div>
+    <div class="tab" onclick="showSection('long')">दीर्घ उत्तर (१०–१५ अंक)</div>
+    <div class="tab" onclick="showSection('tips')">परीक्षा निर्देशन</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- OFFICIAL NOTICE -->
+  <div class="notice-box" id="section-tips-box">
+    <div class="notice-title">📋 परीक्षा सूचना तथा निर्देशनहरू</div>
+    <div class="notice-grid">
+      <div class="ng-row"><span class="ng-label">सेवा:</span><span class="ng-val">कृषि सेवा, चौथो तह</span></div>
+      <div class="ng-row"><span class="ng-label">आयोग:</span><span class="ng-val">गण्डकी प्रदेश लोक सेवा</span></div>
+      <div class="ng-row"><span class="ng-label">परीक्षा:</span><span class="ng-val">लिखित परीक्षा (Written)</span></div>
+      <div class="ng-row"><span class="ng-label">कुल अंक:</span><span class="ng-val">१०० अंक</span></div>
+      <div class="ng-row"><span class="ng-label">समय:</span><span class="ng-val">३ घण्टा</span></div>
+      <div class="ng-row"><span class="ng-label">माध्यम:</span><span class="ng-val">नेपाली / अङ्ग्रेजी</span></div>
+    </div>
+    <ul class="notice-rules">
+      <li>खण्ड (क) — लघु उत्तरात्मक: ८ प्रश्न × ५ अंक = ४० अंक (सबै अनिवार्य)</li>
+      <li>खण्ड (ख) — दीर्घ उत्तर / विश्लेषणात्मक: ६ प्रश्नमध्ये ४ उत्तर दिनुहोस् × १५ अंक = ६० अंक</li>
+      <li>उत्तर नेपाली वा अङ्ग्रेजी जुनसुकै भाषामा लेख्न पाइन्छ</li>
+      <li>उत्तर लेख्दा बुँदागत रूपमा र प्राविधिक शब्दावली प्रयोग गर्नुहोस्</li>
+      <li>हस्तलेखन सफा, स्पष्ट र पठनयोग्य हुनुपर्छ</li>
+      <li>नक्कल वा अनुचित साधन प्रयोग गर्न सख्त मनाही छ</li>
+    </ul>
+  </div>
+
+  <!-- HOW TO WRITE BOX -->
+  <div class="format-box" id="section-tips">
+    <h3>🖊 लिखित उत्तर कसरी लेख्ने? — Lok Sewa Format</h3>
+    <div class="format-steps">
+      <div class="format-step">
+        <div class="step-num">१</div>
+        <div class="step-text"><strong>शीर्षक र परिभाषाबाट सुरु गर्नुहोस्:</strong> पहिलो अनुच्छेदमा प्रश्नको मुख्य विषय परिभाषित गर्नुहोस्। जस्तै: "IPM भनेको..." वा "ADS भनेको..."</div>
+      </div>
+      <div class="format-step">
+        <div class="step-num">२</div>
+        <div class="step-text"><strong>बुँदागत संरचना अपनाउनुहोस्:</strong> उत्तर बुँदामा (Points) लेख्नुहोस्। लामो अनुच्छेद नलेख्नुहोस्। प्रत्येक बुँदा स्पष्ट र अर्थपूर्ण हुनुपर्छ।</div>
+      </div>
+      <div class="format-step">
+        <div class="step-num">३</div>
+        <div class="step-text"><strong>प्राविधिक शब्द (Technical Terms) प्रयोग गर्नुहोस्:</strong> <em>AESA, INM, HDP, Value Chain, Citrus Decline, PHI</em> जस्ता शब्दले अंक बढाउँछ।</div>
+      </div>
+      <div class="format-step">
+        <div class="step-num">४</div>
+        <div class="step-text"><strong>गण्डकी सन्दर्भ थप्नुहोस्:</strong> सुन्तला, स्याउ (मुस्ताङ), कफी, आलु खेतीको स्थानीय उदाहरण दिनुहोस्।</div>
+      </div>
+      <div class="format-step">
+        <div class="step-num">५</div>
+        <div class="step-text"><strong>निष्कर्ष (Conclusion) लेख्नुहोस्:</strong> अन्तिम अनुच्छेदमा सारसंक्षेप वा सुझाव दिनुहोस्।</div>
+      </div>
+      <div class="format-step">
+        <div class="step-num">६</div>
+        <div class="step-text"><strong>समय व्यवस्थापन:</strong> ५ अंकको प्रश्नमा ८–१० मिनेट र १५ अंकमा २०–२५ मिनेट छुट्याउनुहोस्।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="print-bar" onclick="window.print()">🖨 प्रश्नपत्र प्रिन्ट गर्नुहोस् (Print Question Paper)</div>
+
+  <!-- ═══ SECTION A: SHORT ANSWER ═══ -->
+  <div id="section-short">
+    <div class="section-label">
+      <div class="sl-mark">खण्ड — क</div>
+      <button class="section-toggle-btn" onclick="toggleSection('short-content',this)">
+        <span class="sl-text">लघु उत्तरात्मक प्रश्नहरू</span>
+        <span class="stb-arrow">▾</span>
+      </button>
+      <div class="sl-marks">८ × ५ = ४०</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div id="short-content">
+
+      <!-- Q1 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q1</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              कृषि विकास रणनीति (ADS) २०१५–२०३५ का <strong>प्रमुख चार स्तम्भहरू (Pillars)</strong> उल्लेख गर्दै यसको महत्व स्पष्ट पार्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h1',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h1">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 मुख्य बुँदाहरू — Key Points</div>
+                <ul class="hint-list">
+                  <li>ADS को पूर्ण नाम र अवधि (2015–2035) उल्लेख गर्नुस्</li>
+                  <li>४ Pillars: Governance, Technology, Commercialization, Cooperative</li>
+                  <li>GDP र खाद्य सुरक्षामा ADS को भूमिका उल्लेख गर्नुस्</li>
+                  <li>नेपाल र गण्डकी प्रदेशको सन्दर्भ जोड्नुस्</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">ADS 2015-2035</span>
+                  <span class="kw">Governance</span>
+                  <span class="kw">Commercialization</span>
+                  <span class="kw">GDP 5.11%</span>
+                  <span class="kw">खाद्य सुरक्षा</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> ADS को ४ Pillars बुँदामा लेख्नुस् र अन्तमा गण्डकी प्रदेशसँग जोड्नुस् — अतिरिक्त अंक मिल्छ।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न १</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q2</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              एकीकृत शत्रुजीव व्यवस्थापन (IPM) को परिभाषा दिँदै यसका <strong>चार मुख्य सिद्धान्तहरू</strong> लेख्नुहोस्: स्वस्थ बाली उत्पादन, मित्रजीवको संरक्षण, नियमित खेत निरीक्षण र किसानलाई दक्ष बनाउने।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h2',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h2">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 मुख्य बुँदाहरू</div>
+                <ul class="hint-list">
+                  <li>IPM = Integrated Pest Management — परिभाषा: बहु-विधि कीट नियन्त्रण</li>
+                  <li>AESA (Agro-Ecosystem Analysis) को भूमिका उल्लेख गर्नुस्</li>
+                  <li>जैविक, भौतिक, यान्त्रिक र रासायनिक विधिको समन्वय</li>
+                  <li>Farmer Field School (FFS) सँग जोड्नुस्</li>
+                  <li>विषादी न्यूनीकरण र वातावरण संरक्षण</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">IPM</span>
+                  <span class="kw">AESA</span>
+                  <span class="kw">FFS</span>
+                  <span class="kw">Biological Control</span>
+                  <span class="kw">मित्रजीव</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> AESA र FFS शब्द उल्लेख गर्नुस् — परीक्षकले प्राविधिक ज्ञान देखेर अतिरिक्त अंक दिन्छन्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न २</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q3</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              कृषि प्रसारमा प्रयोग गरिने <strong>'नतिजा प्रदर्शन' (Result Demonstration)</strong> र <strong>'तरिका प्रदर्शन' (Method Demonstration)</strong> बीचका प्रमुख भिन्नताहरू उल्लेख गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h3',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h3">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 तुलनात्मक तालिकाको ढाँचा प्रयोग गर्नुस्</div>
+                <ul class="hint-list">
+                  <li>Result Demo: के हासिल भयो — उत्पादन परिणाम देखाउँछ</li>
+                  <li>Method Demo: कसरी गर्ने — प्रक्रिया सिकाउँछ</li>
+                  <li>उद्देश्य, स्थान, दर्शक र समयको भिन्नता लेख्नुस्</li>
+                  <li>उदाहरण: नयाँ जात vs. सिँचाइ प्रविधि प्रदर्शन</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Result Demo</span>
+                  <span class="kw">Method Demo</span>
+                  <span class="kw">Contact Farmer</span>
+                  <span class="kw">Extension</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> तुलनात्मक तालिका (Comparison Table) बनाउनुस् — दुई कलम बनाएर भिन्नता देखाउनु सबैभन्दा प्रभावकारी हुन्छ।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ३</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q4</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              माटोको नमूना लिने वैज्ञानिक <strong>'V-Shape'</strong> विधि चरणबद्ध रूपमा वर्णन गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h4',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h4">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 चरणहरू क्रमबद्ध लेख्नुस्</div>
+                <ul class="hint-list">
+                  <li>खेत सफा गर्ने → Zigzag Pattern मा स्थान छान्ने</li>
+                  <li>V-आकारमा ०–२० सेमी (Topsoil) गहराइ खन्ने</li>
+                  <li>५–१५ उपनमूना (Sub-sample) एकत्र गर्ने</li>
+                  <li>मिसाएर ५०० ग्राम नमूना लिने र लेबल लगाउने</li>
+                  <li>प्रयोगशालामा pH, NPK परीक्षण गराउने</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">V-Shape</span>
+                  <span class="kw">Sub-sample</span>
+                  <span class="kw">Topsoil</span>
+                  <span class="kw">Composite Sample</span>
+                  <span class="kw">pH</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> V-Shape को सरल रेखाचित्र (Diagram) कोर्नुस् — ३–४ शब्दले लेबल गर्नुस्। रेखाचित्रले अतिरिक्त अंक दिन्छ।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ४</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q5</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              स्थानीय तहमा <strong>कृषक समूह (Krishak Samuha)</strong> गठन गर्ने प्रक्रिया र यसका फाइदाहरू लेख्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h5',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h5">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 प्रक्रिया र फाइदा दुवै लेख्नुस्</div>
+                <ul class="hint-list">
+                  <li>प्रक्रिया: आवश्यकता पहिचान → सदस्य भर्ती → विधान तयार → दर्ता</li>
+                  <li>न्यूनतम सदस्य: महिला समावेशी समूह</li>
+                  <li>फाइदा: सामूहिक बजार, सहुलियत ऋण, समूह तालिम</li>
+                  <li>सहकारीसँग जोड्ने सम्भावना</li>
+                  <li>सरकारी अनुदानमा प्राथमिकता</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Krishak Samuha</span>
+                  <span class="kw">Cooperative</span>
+                  <span class="kw">Collective Marketing</span>
+                  <span class="kw">लैंगिक समावेशीकरण</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> महिला सहभागिता र लैंगिक समावेशीकरणको उल्लेख गर्नु न बिर्सनुस् — यो वर्तमान नीतिको प्रमुख विषय हो।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ५</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q6</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              गुणस्तरीय बीउका आवश्यक विशेषताहरू — <strong>भौतिक शुद्धता, आनुवंशिक शुद्धता, उच्च अंकुरण क्षमता</strong> आदि — बुँदागत रूपमा लेख्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h6',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h6">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 ७–८ विशेषता बुँदागत लेख्नुस्</div>
+                <ul class="hint-list">
+                  <li>उच्च अंकुरण क्षमता: ≥८०%</li>
+                  <li>आनुवंशिक शुद्धता (Genetic Purity)</li>
+                  <li>भौतिक शुद्धता: ढुंगा, माटो, अन्य बीउ रहित</li>
+                  <li>उच्च जीवनशक्ति (High Vigour)</li>
+                  <li>रोग/कीरामुक्त (Disease-free)</li>
+                  <li>उचित आर्द्रता (<१२%)</li>
+                  <li>बीउ ट्याग: White, Blue, Yellow वर्गीकरण</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Genetic Purity</span>
+                  <span class="kw">Germination</span>
+                  <span class="kw">Vigour</span>
+                  <span class="kw">Seed Tag</span>
+                  <span class="kw">Foundation Seed</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> बीउको वर्गीकरण (Breeder → Foundation → Certified → Improved) को छोटो तालिका राख्नुस् — देखाउँछ कि तपाईंलाई पूरा ज्ञान छ।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ६</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q7</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              गण्डकी प्रदेशको हावापानी सुहाउँदो <strong>आलु खेतीका उन्नत प्रविधि</strong> (जात र लगाउने समय) बारे संक्षिप्त जानकारी दिनुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h7',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h7">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 स्थानीय सन्दर्भसहित लेख्नुस्</div>
+                <ul class="hint-list">
+                  <li>उन्नत जात: कुफ्री ज्योति, कार्डिनल, डेसिरी, JB 1/2</li>
+                  <li>Agri Seasons: मध्य पहाड — फागुन/चैत र असोज/कार्तिक</li>
+                  <li>Seed Rate: प्रति हे. १५–२५ क्विन्टल</li>
+                  <li>Spacing: ६०×२५ सेमी वा ५०×२० सेमी</li>
+                  <li>Late Blight नियन्त्रण: Mancozeb, प्रतिरोधी जात</li>
+                  <li>बहुगुणी खेती: आलु + तरकारी + अनाज</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Kufri Jyoti</span>
+                  <span class="kw">Late Blight</span>
+                  <span class="kw">गण्डकी</span>
+                  <span class="kw">Seed Rate</span>
+                  <span class="kw">Intercropping</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> "गण्डकी प्रदेश" शब्द उत्तरमा राख्नुस् र मुस्ताङ वा पर्वत जिल्लाको सन्दर्भ दिनुस् — Local relevance अंक बढाउँछ।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ७</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="q-card" data-section="short">
+        <div class="q-top">
+          <div class="q-num">Q8</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★ ५ अंक | लघु उत्तर</div>
+            <div class="q-text">
+              जलवायु परिवर्तनले नेपालको कृषिमा पारेका <strong>असरहरू</strong> र कृषकस्तरमा अपनाउन सकिने <strong>अनुकूलनका उपायहरू</strong> चर्चा गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h8',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h8">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 असर र उपाय अलग-अलग लेख्नुस्</div>
+                <ul class="hint-list">
+                  <li>असर: अनिमित वर्षा, बाढी, खडेरी, रोग-कीराको बढोत्तरी</li>
+                  <li>असर: उत्पादन घट्ने, कृषि ऋतु परिवर्तन</li>
+                  <li>उपाय: Climate-smart Agriculture (CSA)</li>
+                  <li>उपाय: जलसंरक्षण, ड्रिप सिँचाइ, रैथाने जात</li>
+                  <li>उपाय: वन व्यवस्थापन, कृषि वन (Agroforestry)</li>
+                  <li>उपाय: कृषि बीमा, पूर्वसूचना प्रणाली</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Climate-Smart Agri</span>
+                  <span class="kw">CSA</span>
+                  <span class="kw">Agroforestry</span>
+                  <span class="kw">Drip Irrigation</span>
+                  <span class="kw">रैथाने जात</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> "Climate-Smart Agriculture (CSA)" शब्द अवश्य लेख्नुस् र Agroforestry को उदाहरण दिनुस्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड क • प्रश्न ८</span><span class="qc-right">अनिवार्य</span></div>
+      </div>
+
+    </div><!-- /short-content -->
+  </div><!-- /section-short -->
+
+  <!-- ═══ SECTION B: LONG ANSWER ═══ -->
+  <div id="section-long">
+    <div class="section-label">
+      <div class="sl-mark">खण्ड — ख</div>
+      <button class="section-toggle-btn" onclick="toggleSection('long-content',this)">
+        <span class="sl-text">दीर्घ उत्तर / विश्लेषणात्मक</span>
+        <span class="stb-arrow">▾</span>
+      </button>
+      <div class="sl-marks">जुनसुकै ४ × १५ = ६०</div>
+    </div>
+    <div class="section-divider"></div>
+
+    <div style="background:rgba(139,69,19,0.07);border:1px dashed var(--rule);border-radius:6px;padding:12px 16px;margin-bottom:18px;font-size:12.5px;color:var(--muted);">
+      📌 <strong style="color:var(--accent2)">निर्देशन:</strong> तलका ६ प्रश्नमध्ये जुनसुकै <strong>४ प्रश्नको उत्तर</strong> दिनुहोस्। प्रत्येक प्रश्न १५ अंकको छ।
+    </div>
+
+    <div id="long-content">
+
+      <!-- Q9 -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q9</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★ १५ अंक | दीर्घ उत्तर</div>
+            <div class="q-text">
+              गण्डकी प्रदेशमा सुन्तला जातका फलफूल खेतीको <strong>सम्भावना र प्रमुख चुनौतीहरू</strong> उल्लेख गर्दै <strong>'सिट्रस डिक्लाइन' (Citrus Decline)</strong> व्यवस्थापनका उपायहरू विस्तारमा लेख्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h9',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h9">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 ३ भाग छुट्याएर लेख्नुस् (Structure)</div>
+                <ul class="hint-list">
+                  <li><strong>भाग १ — सम्भावना:</strong> हावापानी (८००–१५०० मि.), बजार माग, निर्यात सम्भावना</li>
+                  <li><strong>भाग २ — चुनौती:</strong> Greening, Tristeza Virus, माटोको pH समस्या</li>
+                  <li><strong>भाग ३ — व्यवस्थापन:</strong> रोग-प्रतिरोधी जात, Shield Budding, पोषण व्यवस्थापन</li>
+                  <li>Integrated Disease Management (IDM) उल्लेख गर्नुस्</li>
+                  <li>Syangja, Tanahu, Kaski जिल्लाको उदाहरण</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Citrus Decline</span>
+                  <span class="kw">Greening</span>
+                  <span class="kw">Tristeza</span>
+                  <span class="kw">Shield Budding</span>
+                  <span class="kw">IDM</span>
+                  <span class="kw">Syangja</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip (१५ अंक):</strong> कम्तिमा ३ भाग बनाउनुस्: परिचय (२ अंक) + मुख्य विषयवस्तु (१० अंक) + निष्कर्ष/सुझाव (३ अंक)। Citrus Decline को कारण र समाधान एउटा तालिकामा देखाउनुस्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न ९</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q10</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★ १५ अंक | विश्लेषणात्मक</div>
+            <div class="q-text">
+              नेपालको वर्तमान <strong>संघीय संरचनामा कृषि विकासका लागि तीन तहका सरकार</strong> (संघ, प्रदेश र स्थानीय) को भूमिका र समन्वयबारे विश्लेषण गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h10',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h10">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 तीन तह छुट्याएर तालिका बनाउनुस्</div>
+                <ul class="hint-list">
+                  <li>संघ: नीति, कानुन, केन्द्रीय बजेट, अन्तर्राष्ट्रिय सन्धि</li>
+                  <li>प्रदेश: कृषि कार्यक्रम, प्राविधिक सेवा, बजार व्यवस्थापन</li>
+                  <li>स्थानीय: किसान पहुँच, अनुदान वितरण, कृषक समूह</li>
+                  <li>समन्वयका चुनौती: दोहोरोपन, बजेट टकराव</li>
+                  <li>संविधानको अनुसूची ८ र ९ उल्लेख गर्नुस्</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Federalism</span>
+                  <span class="kw">Schedule 8</span>
+                  <span class="kw">DADO</span>
+                  <span class="kw">Local Governance</span>
+                  <span class="kw">समन्वय</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> संविधानको अनुसूची ८ (स्थानीय) र अनुसूची ९ (साझा) उल्लेख गर्नुस् — संवैधानिक ज्ञान देखाउनुस्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न १०</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q11</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★ १५ अंक | विश्लेषणात्मक</div>
+            <div class="q-text">
+              नेपालको <strong>कृषि बजारीकरणका प्रमुख समस्याहरू</strong> के-के हुन्? साना किसानको आम्दानी बढाउन <strong>मूल्य शृङ्खला (Value Chain)</strong> पहुँचले कसरी सहयोग गर्न सक्छ?
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h11',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h11">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 समस्या + Value Chain दुवै विस्तारमा</div>
+                <ul class="hint-list">
+                  <li>समस्या: बिचौलियाको भूमिका, सडक अभाव, भण्डारण नहुनु</li>
+                  <li>समस्या: मूल्य उतारचढाव, सूचनाको अभाव</li>
+                  <li>Value Chain: उत्पादन → संकलन → प्रशोधन → बजार → उपभोक्ता</li>
+                  <li>FPO (Farmer Producer Organization) को भूमिका</li>
+                  <li>Agro-Enterprise, e-Commerce, कोल्ड स्टोरेज</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Value Chain</span>
+                  <span class="kw">FPO</span>
+                  <span class="kw">Cold Storage</span>
+                  <span class="kw">Middleman</span>
+                  <span class="kw">Agribusiness</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> Value Chain को Flow Chart (→) बनाउनुस् र गण्डकी प्रदेशको सुन्तला वा कफीको उदाहरण दिनुस्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न ११</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q12</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★ १५ अंक | दीर्घ उत्तर</div>
+            <div class="q-text">
+              कुनै एक प्रमुख बालीको शत्रुजीव — जस्तै <strong>मकैको अमेरिकी फौजी कीरा (Fall Army Worm)</strong> वा <strong>आलुको डढुवा रोग (Late Blight)</strong> — को पहिचान, लक्षण र यसको एकीकृत व्यवस्थापन विधि लेख्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h12',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h12">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 पहिचान → लक्षण → व्यवस्थापन (३ भाग)</div>
+                <ul class="hint-list">
+                  <li><strong>Fall Army Worm:</strong> Spodoptera frugiperda, पात खाने, Window pane damage</li>
+                  <li><strong>Late Blight:</strong> Phytophthora infestans, कालो धब्बा, तल पात</li>
+                  <li>IPM: जैविक — Trichogramma, Beauveria</li>
+                  <li>रासायनिक: Emamectin benzoate / Mancozeb</li>
+                  <li>कृषि विधि: Crop Rotation, Resistant Variety</li>
+                  <li>Economic Threshold Level (ETL) उल्लेख गर्नुस्</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">FAW</span>
+                  <span class="kw">Late Blight</span>
+                  <span class="kw">ETL</span>
+                  <span class="kw">Trichogramma</span>
+                  <span class="kw">Beauveria</span>
+                  <span class="kw">IPM</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> Economic Threshold Level (ETL) को अवधारणा उल्लेख गर्नुस् — यो IPM मा उच्च-स्तरीय ज्ञान हो।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न १२</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q13</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★ १५ अंक | दीर्घ उत्तर</div>
+            <div class="q-text">
+              गण्डकी प्रदेशको भौगोलिक परिवेश अनुसार <strong>सुन्तला वा कफीको गुणस्तरीय बिरुवा उत्पादन गर्न नर्सरी व्यवस्थापन</strong>मा ध्यान दिनुपर्ने कुराहरू वर्णन गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h13',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h13">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 Nursery व्यवस्थापनका पक्षहरू</div>
+                <ul class="hint-list">
+                  <li>स्थान छनोट: हावापानी, पानी उपलब्धता, बाटो पहुँच</li>
+                  <li>Budding / Grafting: Shield Budding (सुन्तला), Seed (कफी)</li>
+                  <li>Growing Media: Soil + Sand + Compost (1:1:1)</li>
+                  <li>Shade House, Poly House व्यवस्थापन</li>
+                  <li>Hardening Off: रोपाइ अघिको तयारी</li>
+                  <li>रोग नियन्त्रण: Damping Off, Root Rot</li>
+                  <li>NARC र कृषि ज्ञान केन्द्रको सहयोग</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">Shield Budding</span>
+                  <span class="kw">Poly House</span>
+                  <span class="kw">Hardening</span>
+                  <span class="kw">Growing Media</span>
+                  <span class="kw">Damping Off</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip:</strong> नर्सरीको layout sketch कोर्न सकिन्छ — Shade house, Bed, Water source देखाउनुस्।</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न १३</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+      <!-- Q14 — Scenario Based -->
+      <div class="q-card" data-section="long">
+        <div class="q-top">
+          <div class="q-num">Q14</div>
+          <div class="q-body">
+            <div class="q-marks-badge">★★★ १५ अंक | परिदृश्य-आधारित (Scenario)</div>
+            <div class="q-text">
+              <strong>परिदृश्य:</strong> तपाईं कुनै ग्रामीण नगरपालिकामा प्राविधिकको रूपमा कार्यरत हुनुहुन्छ जहाँ माटो अत्यधिक <strong>अम्लीय (Acidic, pH ४.५–५.०)</strong> छ।<br><br>
+              माटो सुधार र सन्तुलित मल प्रयोगका लागि तपाईं कस्तो <strong>प्रसार कार्यक्रम (Extension Program)</strong> बनाउनुहुन्छ? सम्पूर्ण योजना प्रस्तुत गर्नुहोस्।
+            </div>
+            <div class="hint-toggle" onclick="toggleHint('h14',this)">
+              <span>💡 संकेत (Hint) हेर्नुस्</span>
+              <span class="ht-arrow">▶</span>
+            </div>
+            <div class="hint-panel" id="h14">
+              <div class="hint-inner">
+                <div class="hint-title">🔑 Program Planning Format प्रयोग गर्नुस्</div>
+                <ul class="hint-list">
+                  <li><strong>समस्या पहिचान:</strong> pH परीक्षण, AESA, किसान परामर्श</li>
+                  <li><strong>माटो सुधार:</strong> चूना (Lime) प्रयोग — मात्रा: pH हेरेर</li>
+                  <li><strong>INM:</strong> Organic + Chemical मलको सन्तुलन</li>
+                  <li><strong>प्रसार विधि:</strong> FFS, Demo Plot, Radio</li>
+                  <li><strong>Monitoring:</strong> अनुगमन र मूल्यांकन योजना</li>
+                  <li><strong>बजेट:</strong> स्थानीय तहको सहयोग</li>
+                </ul>
+                <div class="hint-keywords">
+                  <span class="kw">AESA</span>
+                  <span class="kw">INM</span>
+                  <span class="kw">Liming</span>
+                  <span class="kw">FFS</span>
+                  <span class="kw">Demo Plot</span>
+                  <span class="kw">M&E</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-tip">
+              <span class="tip-icon">📝</span>
+              <span><strong>Exam Tip (Scenario):</strong> Program का ५ भाग लेख्नुस्: (१) Problem ID (२) Objective (३) Activities (४) Timeline (५) M&E। यो format ले Maximum अंक दिलाउँछ।</span>
+            </div>
+
+            <div class="template-box">
+              <div class="tmpl-title">📋 Scenario उत्तर ढाँचा</div>
+              <strong>परिचय</strong> — समस्याको विवरण र महत्व (२–३ वाक्य)<br>
+              <strong>खण्ड १:</strong> माटो परीक्षण र समस्या पहिचान<br>
+              <strong>खण्ड २:</strong> माटो सुधारका प्राविधिक उपाय<br>
+              <strong>खण्ड ३:</strong> प्रसार कार्यक्रम डिजाइन<br>
+              <strong>खण्ड ४:</strong> अनुगमन तथा मूल्यांकन<br>
+              <strong>निष्कर्ष:</strong> सुझाव र अपेक्षित नतिजा
+            </div>
+          </div>
+        </div>
+        <div class="q-counter"><span>खण्ड ख • प्रश्न १४</span><span class="qc-right">ऐच्छिक — जुनसुकै ४</span></div>
+      </div>
+
+    </div><!-- /long-content -->
+  </div><!-- /section-long -->
+
+</div><!-- /main -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="bnav-item" onclick="location.href='home.html'"><div class="bnav-icon">🏠</div><div>Home</div></div>
+  <div class="bnav-item" onclick="location.href='gandaki_krishi_quiz.html'"><div class="bnav-icon">🎯</div><div>Quiz</div></div>
+  <div class="bnav-item active"><div class="bnav-icon">✍️</div><div>Written</div><div class="bnav-dot"></div></div>
+  <div class="bnav-item" onclick="location.href='home.html'"><div class="bnav-icon">📊</div><div>Report</div></div>
+  <div class="bnav-item" onclick="location.href='syllabus.html'"><div class="bnav-icon">📚</div><div>Syllabus</div></div>
+</div>
+
+<!-- SCROLL TOP -->
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+/* Hint toggle */
+function toggleHint(id, btn) {
+  const panel = document.getElementById(id);
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+/* Section content toggle */
+function toggleSection(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('collapsed');
+  btn.classList.toggle('collapsed');
+}
+
+/* Tab filter */
+function showSection(type) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  const short = document.getElementById('section-short');
+  const long  = document.getElementById('section-long');
+  const tips  = document.getElementById('section-tips');
+  const tbox  = document.getElementById('section-tips-box');
+  if (type === 'all')    { short.style.display=''; long.style.display=''; tips.style.display=''; tbox.style.display=''; }
+  if (type === 'short')  { short.style.display=''; long.style.display='none'; tips.style.display='none'; tbox.style.display='none'; }
+  if (type === 'long')   { short.style.display='none'; long.style.display=''; tips.style.display='none'; tbox.style.display='none'; }
+  if (type === 'tips')   { short.style.display='none'; long.style.display='none'; tips.style.display=''; tbox.style.display=''; }
+}
+
+/* Scroll-to-top button */
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 300);
+});
+
+/* Save view to localStorage */
+try {
+  const hist = JSON.parse(localStorage.getItem('krishi_quiz_history') || '[]');
+  const today = new Date().toDateString();
+  if (!hist.find(h => h.type === 'written_view' && h.date === today)) {
+    hist.push({ name: 'Written Exam Practice', date: today, type: 'written_view', total: 14, correct: 0, wrong: 0, marks: 0 });
+    localStorage.setItem('krishi_quiz_history', JSON.stringify(hist));
+  }
+} catch(e) {}
+</script>
+</body>
+</html>
