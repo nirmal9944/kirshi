@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>पाठ्यक्रम — गण्डकी कृषि लोकसेवा</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Fraunces:opsz,wght@9..144,300;9..144,700;9..144,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1810; --surface:#111f14; --card:#162019;
+  --border:rgba(100,180,80,0.18); --border2:rgba(100,180,80,0.08);
+  --neon:#aaff44; --green:#4caf50; --leaf:#7ac142;
+  --gold:#f5c842; --amber:#ff9800; --sky:#64b5f6;
+  --red:#ef5350; --purple:#ce93d8;
+  --text:#dff0d4; --muted:rgba(223,240,212,0.45);
+  --ink:#0c1810;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Tiro Devanagari Hindi',serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 5% 95%,rgba(44,90,27,.35) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 95% 5%,rgba(74,140,42,.18) 0%,transparent 50%);
+  animation:bgpulse 12s ease-in-out infinite alternate;
+}
+@keyframes bgpulse{0%{opacity:.7}100%{opacity:1}}
+
+/* PARTICLES */
+.particle{position:fixed;pointer-events:none;animation:rise linear infinite;opacity:0;}
+@keyframes rise{
+  0%{transform:translateY(110vh) rotate(0);opacity:0;}
+  8%{opacity:.12;} 92%{opacity:.12;}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0;}
+}
+
+/* PAGE WRAP */
+.page{position:relative;z-index:1;max-width:540px;margin:0 auto;padding:0 16px 100px;}
+
+/* ── HEADER ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 0 12px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:4px;
+  position:sticky;top:0;z-index:100;
+  background:rgba(12,24,16,.92);
+  backdrop-filter:blur(16px);
+  margin-left:-16px;margin-right:-16px;
+  padding-left:16px;padding-right:16px;
+}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.back-btn{
+  width:34px;height:34px;
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--border);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;color:var(--text);
+  font-size:15px;transition:all .2s;
+}
+.back-btn:hover{background:rgba(170,255,68,.1);}
+.topbar-title{font-size:13px;font-weight:700;color:var(--neon);}
+.topbar-title span{display:block;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:1px;}
+
+/* PRINT */
+.print-btn{
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--border);
+  color:var(--muted);font-size:12px;
+  padding:6px 12px;border-radius:10px;
+  cursor:pointer;transition:all .2s;
+}
+.print-btn:hover{background:rgba(170,255,68,.1);color:var(--neon);}
+
+/* ── HERO BAND ── */
+.hero{
+  background:linear-gradient(135deg,rgba(44,90,27,.6) 0%,rgba(74,140,42,.3) 100%);
+  border:1px solid rgba(122,193,66,.3);
+  border-radius:20px;
+  padding:22px 20px;
+  margin:18px 0;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'📚';position:absolute;right:-8px;top:-8px;
+  font-size:90px;opacity:.06;transform:rotate(10deg);
+}
+.hero-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--gold),#e65100);
+  color:#000;font-size:10px;font-weight:800;
+  letter-spacing:2px;padding:3px 12px;
+  border-radius:20px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:22px;font-weight:900;
+  color:#fff;line-height:1.35;margin-bottom:6px;
+}
+.hero h1 em{font-style:normal;color:var(--neon);text-shadow:0 0 20px rgba(170,255,68,.4);}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px;}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.hstat{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:8px 14px;
+  text-align:center;font-size:11px;color:rgba(255,255,255,.6);
+}
+.hstat strong{display:block;font-size:18px;font-weight:800;color:var(--neon);line-height:1;}
+
+/* ── EXAM SCHEME CARD ── */
+.scheme-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.scheme-card::before{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--neon),var(--leaf));
+  border-radius:4px 0 0 4px;
+}
+.sc-title{
+  font-family:'Fraunces',serif;
+  font-size:14px;font-weight:700;
+  color:var(--neon);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+  padding-left:10px;
+}
+.exam-phases{display:flex;flex-direction:column;gap:10px;padding-left:10px;}
+.phase{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:12px 14px;gap:12px;
+}
+.phase-icon{
+  width:40px;height:40px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.phase-icon.p1{background:rgba(170,255,68,.12);border:1px solid rgba(170,255,68,.2);}
+.phase-icon.p2{background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.2);}
+.phase-info{flex:1;}
+.phase-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
+.phase-detail{font-size:11px;color:var(--muted);line-height:1.6;}
+.phase-marks{
+  font-family:'DM Mono',monospace;
+  font-size:20px;font-weight:500;
+  color:var(--neon);flex-shrink:0;
+}
+
+/* Negative marking alert */
+.neg-alert{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(239,83,80,.08);
+  border:1px solid rgba(239,83,80,.25);
+  border-radius:10px;padding:10px 14px;
+  margin-top:12px;padding-left:24px;
+  font-size:12px;color:rgba(239,83,80,.9);
+  line-height:1.6;
+}
+
+/* ── SECTION HEADER ── */
+.sec-header{
+  display:flex;align-items:center;gap:10px;
+  margin:24px 0 12px;
+}
+.sec-badge{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--neon);padding:4px 12px;border-radius:20px;
+}
+.sec-title{
+  font-family:'Fraunces',serif;
+  font-size:16px;font-weight:700;color:#fff;
+}
+.sec-divider{height:1px;background:linear-gradient(90deg,rgba(170,255,68,.3),transparent);margin-bottom:16px;}
+
+/* ── UNIT CARD ── */
+.unit-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  margin-bottom:14px;
+  overflow:hidden;
+  transition:box-shadow .25s;
+  animation:fadeUp .5s ease both;
+}
+.unit-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.4);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.unit-card:nth-child(1){animation-delay:.05s}
+.unit-card:nth-child(2){animation-delay:.1s}
+.unit-card:nth-child(3){animation-delay:.15s}
+.unit-card:nth-child(4){animation-delay:.2s}
+.unit-card:nth-child(5){animation-delay:.25s}
+.unit-card:nth-child(6){animation-delay:.3s}
+.unit-card:nth-child(7){animation-delay:.35s}
+
+.unit-header{
+  display:flex;align-items:center;
+  padding:14px 16px;
+  cursor:pointer;
+  gap:12px;
+  user-select:none;
+  transition:background .2s;
+}
+.unit-header:hover{background:rgba(255,255,255,.04);}
+
+.unit-icon{
+  width:40px;height:40px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+  border:1px solid transparent;
+}
+.unit-meta{flex:1;}
+.unit-num{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:2px;
+}
+.unit-name{font-size:13.5px;font-weight:700;color:#fff;line-height:1.3;}
+.unit-right{display:flex;align-items:center;gap:8px;}
+.q-badge{
+  font-family:'DM Mono',monospace;
+  font-size:11px;font-weight:500;
+  padding:3px 10px;border-radius:20px;
+}
+.chevron{
+  font-size:10px;color:var(--muted);
+  transition:transform .3s;flex-shrink:0;
+}
+.unit-card.open .chevron{transform:rotate(180deg);}
+
+/* Unit body */
+.unit-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.unit-card.open .unit-body{max-height:800px;}
+.unit-body-inner{
+  padding:0 16px 16px;
+  border-top:1px solid var(--border2);
+  padding-top:12px;
+}
+
+/* Topic list */
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.topic-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12.5px;line-height:1.7;
+  color:rgba(255,255,255,.75);
+  padding:8px 10px;
+  background:rgba(255,255,255,.03);
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.05);
+  transition:all .15s;
+}
+.topic-item:hover{background:rgba(170,255,68,.05);border-color:rgba(170,255,68,.15);}
+.topic-num{
+  font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:500;
+  flex-shrink:0;margin-top:2px;
+  padding:1px 6px;border-radius:4px;
+  background:rgba(255,255,255,.07);
+  color:var(--muted);
+}
+.topic-text{flex:1;}
+
+/* Exam weight bar */
+.weight-bar-wrap{margin-top:12px;}
+.wb-label{
+  display:flex;justify-content:space-between;
+  font-family:'DM Mono',monospace;
+  font-size:10px;color:var(--muted);margin-bottom:5px;
+}
+.wb-bar{height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;}
+.wb-fill{height:100%;border-radius:4px;transition:width 1s ease;}
+
+/* Priority tags */
+.priority-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.ptag{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.8px;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;font-weight:500;
+}
+
+/* ── INTERVIEW SECTION ── */
+.interview-card{
+  background:linear-gradient(135deg,rgba(100,181,246,.08),rgba(206,147,216,.06));
+  border:1px solid rgba(100,181,246,.25);
+  border-radius:18px;
+  padding:18px;margin-bottom:16px;
+}
+.ic-title{
+  font-family:'Fraunces',serif;
+  font-size:14px;font-weight:700;
+  color:var(--sky);
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:14px;
+}
+.ic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.ic-tile{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:12px;
+  text-align:center;font-size:11px;color:var(--muted);
+}
+.ic-tile strong{display:block;font-size:20px;font-weight:800;color:var(--sky);margin-bottom:2px;}
+.ic-tips{
+  background:rgba(255,255,255,.04);
+  border-radius:10px;padding:12px;
+  font-size:12px;line-height:1.9;color:rgba(255,255,255,.65);
+}
+.ic-tips li{list-style:none;padding-left:0;}
+.ic-tips li::before{content:'→ ';color:var(--sky);}
+
+/* ── SMART TIPS BOX ── */
+.tips-box{
+  background:linear-gradient(135deg,rgba(245,200,66,.07),rgba(255,152,0,.04));
+  border:1px solid rgba(245,200,66,.2);
+  border-radius:16px;
+  padding:16px 18px;
+  margin-bottom:16px;
+}
+.tips-box h4{
+  font-family:'Fraunces',serif;
+  font-size:14px;font-weight:700;
+  color:var(--gold);
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:12px;
+}
+.tips-grid{display:flex;flex-direction:column;gap:8px;}
+.tip-row{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12.5px;color:rgba(255,255,255,.7);
+  line-height:1.65;
+}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+
+/* ── STUDY PROGRESS ── */
+.progress-section{margin-bottom:20px;}
+.ps-title{
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px;
+  font-family:'DM Mono',monospace;
+}
+.unit-prog-row{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:8px;
+}
+.upr-name{font-size:11px;color:rgba(255,255,255,.6);width:130px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.upr-bar{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;}
+.upr-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--leaf),var(--neon));transition:width 1.2s ease;}
+.upr-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--neon);width:32px;text-align:right;flex-shrink:0;}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:100%;max-width:540px;
+  background:rgba(10,20,12,.94);
+  border-top:1px solid var(--border);
+  backdrop-filter:blur(16px);
+  display:flex;justify-content:space-around;
+  padding:10px 0 16px;z-index:200;
+}
+.bnav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  text-decoration:none;color:var(--muted);
+  font-size:10px;cursor:pointer;padding:4px 14px;
+  border-radius:10px;transition:all .2s;
+}
+.bnav-item:hover{color:var(--text);}
+.bnav-item.active{color:var(--neon);}
+.bnav-icon{font-size:18px;}
+.bnav-dot{width:4px;height:4px;background:var(--neon);border-radius:50%;margin:0 auto;display:none;}
+.bnav-item.active .bnav-dot{display:block;}
+
+/* SCROLL TOP */
+.scroll-top{
+  position:fixed;bottom:75px;right:18px;
+  width:36px;height:36px;
+  background:var(--leaf);color:#000;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;z-index:201;
+  box-shadow:0 4px 14px rgba(122,193,66,.4);
+  transition:all .2s;opacity:0;pointer-events:none;
+}
+.scroll-top.show{opacity:1;pointer-events:all;}
+.scroll-top:hover{transform:translateY(-2px);}
+
+@media print{
+  .topbar,.bottom-nav,.scroll-top,.print-btn{display:none!important;}
+  body{background:#fff!important;color:#000!important;}
+  .unit-body{max-height:none!important;}
+  .unit-card.open .unit-body,.unit-card .unit-body{max-height:none!important;display:block!important;}
+}
+</style>
+</head>
+<body>
+
+<div id="pl"></div>
+
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="home.html" class="back-btn">←</a>
+      <div class="topbar-title">
+        📚 पाठ्यक्रम
+        <span>Gandaki Province • Krishi 4th Level</span>
+      </div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨 Print</button>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">आधिकारिक • Official Syllabus</div>
+    <h1>गण्डकी प्रदेश<br><em>कृषि सेवा पाठ्यक्रम</em></h1>
+    <p class="hero-sub">
+      चौथो तह — नायव प्राविधिक सहायक<br>
+      गण्डकी प्रदेश लोक सेवा आयोग • 2082 B.S.
+    </p>
+    <div class="hero-stats">
+      <div class="hstat"><strong>७</strong>एकाइ</div>
+      <div class="hstat"><strong>५०</strong>MCQ</div>
+      <div class="hstat"><strong>१००</strong>अंक</div>
+      <div class="hstat"><strong>४५</strong>मिनेट</div>
+      <div class="hstat"><strong>२०</strong>Interview</div>
+    </div>
+  </div>
+
+  <!-- EXAM SCHEME -->
+  <div class="scheme-card">
+    <div class="sc-title">🏛 परीक्षाको रूपरेखा (Examination Scheme)</div>
+    <div class="exam-phases">
+      <div class="phase">
+        <div class="phase-icon p1">✍️</div>
+        <div class="phase-info">
+          <div class="phase-name">प्रथम चरण — लिखित परीक्षा (MCQ)</div>
+          <div class="phase-detail">
+            ५० बहुवैकल्पिक प्रश्न × २ अंक = १०० अंक<br>
+            उत्तीर्णाङ्क: ४० • समय: ४५ मिनेट<br>
+            नेपाली वा अङ्ग्रेजी माध्यम
+          </div>
+        </div>
+        <div class="phase-marks">100</div>
+      </div>
+      <div class="phase">
+        <div class="phase-icon p2">🎙</div>
+        <div class="phase-info">
+          <div class="phase-name">द्वितीय चरण — अन्तर्वार्ता (Interview)</div>
+          <div class="phase-detail">
+            मौखिक परीक्षा<br>
+            लिखितमा छनोट भएकाहरूलाई मात्र<br>
+            प्राविधिक ज्ञान, व्यक्तित्व, कार्यक्षमता
+          </div>
+        </div>
+        <div class="phase-marks" style="color:var(--gold)">20</div>
+      </div>
+    </div>
+    <div class="neg-alert">
+      ⚠️ <span><strong>नकारात्मक अंक:</strong> प्रत्येक गलत उत्तरमा २०% = <strong>०.४ अंक</strong> काटिनेछ। अनुमानमा उत्तर नदिनुस्।</span>
+    </div>
+  </div>
+
+  <!-- STUDY PROGRESS (localStorage) -->
+  <div class="progress-section" id="studyProgress" style="display:none;">
+    <div class="ps-title">📊 तपाईंको अध्ययन प्रगति</div>
+    <div id="progRows"></div>
+  </div>
+
+  <!-- SYLLABUS UNITS -->
+  <div class="sec-header">
+    <div class="sec-badge">विस्तृत पाठ्यक्रम</div>
+    <div class="sec-title">७ एकाइ — Syllabus Units</div>
+  </div>
+  <div class="sec-divider"></div>
+
+  <!-- UNIT 1 -->
+  <div class="unit-card" id="unit1">
+    <div class="unit-header" onclick="toggleUnit('unit1')">
+      <div class="unit-icon" style="background:rgba(245,200,66,.12);border-color:rgba(245,200,66,.25);">🏛</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ १ • Unit 1</div>
+        <div class="unit-name">नीति तथा कानुनी व्यवस्था</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(245,200,66,.15);color:var(--gold);">8 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">१.१</span><span class="topic-text">नेपालको संविधानमा कृषि तथा खाद्य सुरक्षा व्यवस्था (<strong>धारा ३६</strong>)</span></li>
+          <li class="topic-item"><span class="topic-num">१.२</span><span class="topic-text">निजामती सेवा ऐन, <strong>२०४९</strong> र नियमावली, २०५० — आचरण र सजाय</span></li>
+          <li class="topic-item"><span class="topic-num">१.३</span><span class="topic-text">राष्ट्रिय कृषि नीति, <strong>२०६१</strong> र चालू आवधिक योजना</span></li>
+          <li class="topic-item"><span class="topic-num">१.४</span><span class="topic-text">कृषि विकास रणनीति (<strong>ADS</strong>) २०१५–२०३५ र बीउ बिजन दीर्घकालीन राष्ट्रिय सोच २०१३–२०२५</span></li>
+          <li class="topic-item"><span class="topic-num">१.५</span><span class="topic-text">बीउ बिजन ऐन <strong>२०४५</strong> (संशोधन २०६४), बिरुवा संरक्षण ऐन २०६४, र विषादी व्यवस्थापन ऐन <strong>२०७६</strong></span></li>
+          <li class="topic-item"><span class="topic-num">१.६</span><span class="topic-text">संघीयतामा कृषि विकासको संगठनात्मक संरचना र <strong>तीन तहको सरकार</strong>को भूमिका</span></li>
+          <li class="topic-item"><span class="topic-num">१.७</span><span class="topic-text">बाली बीमा, कृषि ऋण, र उत्पादन लागत निर्धारण</span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>8/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:16%;background:linear-gradient(90deg,#c9860a,#f5c842);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(239,83,80,.12);color:#ef5350;border:1px solid rgba(239,83,80,.25);">🔴 ADS High Priority</span>
+          <span class="ptag" style="background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);">धारा ३६</span>
+          <span class="ptag" style="background:rgba(100,181,246,.1);color:var(--sky);border:1px solid rgba(100,181,246,.2);">ऐन/नियम</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 2 -->
+  <div class="unit-card" id="unit2">
+    <div class="unit-header" onclick="toggleUnit('unit2')">
+      <div class="unit-icon" style="background:rgba(122,193,66,.12);border-color:rgba(122,193,66,.25);">🌳</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ २ • Unit 2</div>
+        <div class="unit-name">बागवानी (Horticulture)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(122,193,66,.15);color:var(--leaf);">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">२.१</span><span class="topic-text">बागवानीको परिभाषा, वर्गीकरण र नेपालमा सम्भावना तथा चुनौती</span></li>
+          <li class="topic-item"><span class="topic-num">२.२</span><span class="topic-text">फलफूल र तरकारी बालीको खेती प्रविधि — <strong>आलु, काउली समूह, लहरेबाली, सागपात</strong></span></li>
+          <li class="topic-item"><span class="topic-num">२.३</span><span class="topic-text">बिरुवा प्रसारण विधि: बीउ (Sexual) र वानस्पतिक (<strong>Grafting, Budding, Layering</strong>)</span></li>
+          <li class="topic-item"><span class="topic-num">२.४</span><span class="topic-text">बगैंचा स्थापना, खाडल खन्ने तरिका र बिरुवा लगाउने दूरी</span></li>
+          <li class="topic-item"><span class="topic-num">२.५</span><span class="topic-text"><strong>सुन्तला, स्याउ, आँप, केरा, कफी र चिया</strong> खेती प्रविधि — गण्डकी सन्दर्भ</span></li>
+          <li class="topic-item"><span class="topic-num">२.६</span><span class="topic-text">बेमौसमी तरकारी उत्पादन र <strong>नर्सरी व्यवस्थापन</strong></span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#2d5a1b,#7ac142);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(239,83,80,.12);color:#ef5350;border:1px solid rgba(239,83,80,.25);">🔴 Citrus Decline</span>
+          <span class="ptag" style="background:rgba(122,193,66,.1);color:var(--leaf);border:1px solid rgba(122,193,66,.2);">गण्डकी Focus</span>
+          <span class="ptag" style="background:rgba(100,181,246,.1);color:var(--sky);border:1px solid rgba(100,181,246,.2);">Budding/Grafting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 3 -->
+  <div class="unit-card" id="unit3">
+    <div class="unit-header" onclick="toggleUnit('unit3')">
+      <div class="unit-icon" style="background:rgba(100,181,246,.1);border-color:rgba(100,181,246,.2);">📡</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ ३ • Unit 3</div>
+        <div class="unit-name">कृषि प्रसार (Extension)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(100,181,246,.12);color:var(--sky);">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">३.१</span><span class="topic-text">कृषि प्रसारको परिचय, सिद्धान्त र महत्व</span></li>
+          <li class="topic-item"><span class="topic-num">३.२</span><span class="topic-text">वयस्क शिक्षण र सिकाइ प्रक्रिया (<strong>Adult Teaching and Learning</strong>)</span></li>
+          <li class="topic-item"><span class="topic-num">३.३</span><span class="topic-text">प्रसार तरिकाहरू: <strong>व्यक्तिगत, समूहगत र सामूहिक (Mass)</strong></span></li>
+          <li class="topic-item"><span class="topic-num">३.४</span><span class="topic-text">कृषक समूह गठन, परिचालन र <strong>अगुवा कृषक</strong>को भूमिका</span></li>
+          <li class="topic-item"><span class="topic-num">३.५</span><span class="topic-text">नवप्रवर्तन प्रसार — <strong>Innovation & Diffusion Theory</strong> (Everett Rogers)</span></li>
+          <li class="topic-item"><span class="topic-num">३.६</span><span class="topic-text">कृषि सञ्चार: <strong>मोबाइल एप, किसान कल सेन्टर</strong> र श्रव्यदृश्य सामग्री</span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#1a3a5c,#64b5f6);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(239,83,80,.12);color:#ef5350;border:1px solid rgba(239,83,80,.25);">🔴 Diffusion Theory</span>
+          <span class="ptag" style="background:rgba(100,181,246,.1);color:var(--sky);border:1px solid rgba(100,181,246,.2);">FFS</span>
+          <span class="ptag" style="background:rgba(122,193,66,.1);color:var(--leaf);border:1px solid rgba(122,193,66,.2);">Gender Mainstreaming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 4 -->
+  <div class="unit-card" id="unit4">
+    <div class="unit-header" onclick="toggleUnit('unit4')">
+      <div class="unit-icon" style="background:rgba(170,255,68,.1);border-color:rgba(170,255,68,.2);">🌾</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ ४ • Unit 4</div>
+        <div class="unit-name">बाली विज्ञान (Crop Science)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(170,255,68,.12);color:var(--neon);">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">४.१</span><span class="topic-text">खाद्यान्न, दलहन र तेलहन बालीहरूको वर्गीकरण</span></li>
+          <li class="topic-item"><span class="topic-num">४.२</span><span class="topic-text"><strong>धान, मकै, गहुँ, उखु र तोरी</strong>को उन्नत खेती प्रविधि</span></li>
+          <li class="topic-item"><span class="topic-num">४.३</span><span class="topic-text">एकीकृत खाद्यतत्व व्यवस्थापन (<strong>INM</strong>) र झारपात व्यवस्थापन</span></li>
+          <li class="topic-item"><span class="topic-num">४.४</span><span class="topic-text">बीउको पुस्ता: <strong>Breeder → Foundation → Certified → Improved</strong> र ट्यागको रङ (White/Blue/Yellow)</span></li>
+          <li class="topic-item"><span class="topic-num">४.५</span><span class="topic-text">सामुदायिक बीउ बैंक र गण्डकी प्रदेशका <strong>रैथाने बालीहरू</strong>को महत्व (कोदो, कागुनो, फापर)</span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#1a3a00,#aaff44);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(170,255,68,.1);color:var(--neon);border:1px solid rgba(170,255,68,.2);">🟢 INM</span>
+          <span class="ptag" style="background:rgba(170,255,68,.1);color:var(--neon);border:1px solid rgba(170,255,68,.2);">Seed Tag Colors</span>
+          <span class="ptag" style="background:rgba(122,193,66,.1);color:var(--leaf);border:1px solid rgba(122,193,66,.2);">रैथाने बाली</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 5 -->
+  <div class="unit-card" id="unit5">
+    <div class="unit-header" onclick="toggleUnit('unit5')">
+      <div class="unit-icon" style="background:rgba(239,83,80,.1);border-color:rgba(239,83,80,.2);">🛡</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ ५ • Unit 5</div>
+        <div class="unit-name">बाली संरक्षण (Plant Protection)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(239,83,80,.12);color:#ef5350;">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">५.१</span><span class="topic-text">प्रमुख बालीका रोग, कीरा, मुसा र तिनको नियन्त्रण विधि</span></li>
+          <li class="topic-item"><span class="topic-num">५.२</span><span class="topic-text">एकीकृत शत्रुजीव व्यवस्थापन (<strong>IPM</strong>) — सिद्धान्त, AESA र कृषक पाठशाला (FFS)</span></li>
+          <li class="topic-item"><span class="topic-num">५.३</span><span class="topic-text">विषादीको प्रकार, सुरक्षित प्रयोग र <strong>विषादी मात्राको गणना (Pesticide Calculation)</strong></span></li>
+          <li class="topic-item"><span class="topic-num">५.४</span><span class="topic-text"><strong>मौरी पालन</strong> र <strong>च्याउ खेती</strong> (कन्ये, गोब्रे, सिताके) को उन्नत प्रविधि</span></li>
+          <li class="topic-item"><span class="topic-num">५.५</span><span class="topic-text">प्लान्ट क्वारेन्टाइन (<strong>Plant Quarantine</strong>) को भूमिका र कार्यप्रणाली</span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#5a0000,#ef5350);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(239,83,80,.12);color:#ef5350;border:1px solid rgba(239,83,80,.25);">🔴 IPM / AESA</span>
+          <span class="ptag" style="background:rgba(239,83,80,.1);color:#ef5350;border:1px solid rgba(239,83,80,.2);">FAW</span>
+          <span class="ptag" style="background:rgba(100,181,246,.1);color:var(--sky);border:1px solid rgba(100,181,246,.2);">Quarantine</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 6 -->
+  <div class="unit-card" id="unit6">
+    <div class="unit-header" onclick="toggleUnit('unit6')">
+      <div class="unit-icon" style="background:rgba(206,147,216,.1);border-color:rgba(206,147,216,.2);">💰</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ ६ • Unit 6</div>
+        <div class="unit-name">कृषि अर्थशास्त्र (Agri Economics)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(206,147,216,.12);color:var(--purple);">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">६.१</span><span class="topic-text">कृषि अर्थशास्त्रको महत्व, <strong>माग र आपूर्तिको नियम</strong></span></li>
+          <li class="topic-item"><span class="topic-num">६.२</span><span class="topic-text">बजार प्रणाली: <strong>थोक, खुद्रा, हाट र सहकारी बजार</strong></span></li>
+          <li class="topic-item"><span class="topic-num">६.३</span><span class="topic-text">कृषि तथ्याङ्क संकलन (Primary & Secondary data) र <strong>क्रप कटिङ (Crop Cutting)</strong></span></li>
+          <li class="topic-item"><span class="topic-num">६.४</span><span class="topic-text">कृषि व्यवसाय (Agri-business) र <strong>मूल्य शृङ्खला (Value Chain)</strong> विकास</span></li>
+          <li class="topic-item"><span class="topic-num">६.५</span><span class="topic-text">न्यूनतम समर्थन मूल्य (<strong>MSP</strong>) को अवधारणा र महत्व</span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#4a1a6a,#ce93d8);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(206,147,216,.1);color:var(--purple);border:1px solid rgba(206,147,216,.2);">🟣 Value Chain</span>
+          <span class="ptag" style="background:rgba(206,147,216,.1);color:var(--purple);border:1px solid rgba(206,147,216,.2);">PMAMP</span>
+          <span class="ptag" style="background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);">MSP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIT 7 -->
+  <div class="unit-card" id="unit7">
+    <div class="unit-header" onclick="toggleUnit('unit7')">
+      <div class="unit-icon" style="background:rgba(255,152,0,.1);border-color:rgba(255,152,0,.2);">🌱</div>
+      <div class="unit-meta">
+        <div class="unit-num">एकाइ ७ • Unit 7</div>
+        <div class="unit-name">माटो व्यवस्थापन (Soil Management)</div>
+      </div>
+      <div class="unit-right">
+        <div class="q-badge" style="background:rgba(255,152,0,.12);color:var(--amber);">7 Q</div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="unit-body">
+      <div class="unit-body-inner">
+        <ul class="topic-list">
+          <li class="topic-item"><span class="topic-num">७.१</span><span class="topic-text">माटोको <strong>भौतिक, रासायनिक र जैविक गुण</strong>हरू</span></li>
+          <li class="topic-item"><span class="topic-num">७.२</span><span class="topic-text">माटोको <strong>pH</strong> मान — अम्लीय र क्षारीय माटो सुधारका उपाय (<strong>कृषि चून र जिप्सम</strong>)</span></li>
+          <li class="topic-item"><span class="topic-num">७.३</span><span class="topic-text">मुख्य खाद्यतत्व (<strong>N, P, K</strong>) र सूक्ष्म तत्वहरूको कार्य र कमीका लक्षण</span></li>
+          <li class="topic-item"><span class="topic-num">७.४</span><span class="topic-text">प्राङ्गारिक र रासायनिक मलको प्रयोग विधि र <strong>मात्रा निकाल्ने तरिका</strong></span></li>
+          <li class="topic-item"><span class="topic-num">७.५</span><span class="topic-text">माटोको नमूना संकलन — वैज्ञानिक <strong>V-Shape विधि</strong></span></li>
+        </ul>
+        <div class="weight-bar-wrap">
+          <div class="wb-label"><span>परीक्षामा भार</span><span>7/50 प्रश्न</span></div>
+          <div class="wb-bar"><div class="wb-fill" style="width:14%;background:linear-gradient(90deg,#4a2800,#ff9800);"></div></div>
+        </div>
+        <div class="priority-row">
+          <span class="ptag" style="background:rgba(255,152,0,.12);color:var(--amber);border:1px solid rgba(255,152,0,.25);">🟠 V-Shape Method</span>
+          <span class="ptag" style="background:rgba(255,152,0,.1);color:var(--amber);border:1px solid rgba(255,152,0,.2);">Urea 46%</span>
+          <span class="ptag" style="background:rgba(122,193,66,.1);color:var(--leaf);border:1px solid rgba(122,193,66,.2);">pH Balance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERVIEW SECTION -->
+  <div class="sec-header" style="margin-top:30px;">
+    <div class="sec-badge">अन्तर्वार्ता</div>
+    <div class="sec-title">Interview Preparation</div>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="interview-card">
+    <div class="ic-title">🎙 द्वितीय चरण — अन्तर्वार्ता (Interview)</div>
+    <div class="ic-grid">
+      <div class="ic-tile"><strong style="color:var(--sky)">20</strong>पूर्णाङ्क</div>
+      <div class="ic-tile"><strong style="color:var(--sky)">मौखिक</strong>प्रणाली</div>
+      <div class="ic-tile"><strong style="color:var(--gold)">छनोट</strong>लिखितबाट मात्र</div>
+      <div class="ic-tile"><strong style="color:var(--purple)">३ पक्ष</strong>परीक्षण</div>
+    </div>
+    <ul class="ic-tips">
+      <li>प्राविधिक ज्ञान — बाली, माटो, प्रसार विषयका प्रश्न</li>
+      <li>व्यक्तित्व — आत्मविश्वास, भाषा शैली, शिष्टाचार</li>
+      <li>कार्यक्षमता — समस्या समाधान र निर्णय गर्ने क्षमता</li>
+      <li>गण्डकी प्रदेशका विशेष बाली (सुन्तला, स्याउ, कफी) बारे तयारी गर्नुस्</li>
+      <li>हालसालैका कृषि नीति र कार्यक्रम जान्नुस् (PMAMP, ADS)</li>
+    </ul>
+  </div>
+
+  <!-- SMART TIPS -->
+  <div class="sec-header">
+    <div class="sec-badge">Smart Tips</div>
+    <div class="sec-title">परीक्षा तयारी सुझाव</div>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div class="tips-box">
+    <h4>🌟 स्मार्ट तयारी सुझावहरू</h4>
+    <div class="tips-grid">
+      <div class="tip-row"><span class="tip-icon">📌</span><span>प्राविधिक शब्दावली जस्तै <strong>AESA, INM, HDP, Value Chain</strong> प्रयोग गर्नाले बढी अंक मिल्छ।</span></div>
+      <div class="tip-row"><span class="tip-icon">🌾</span><span>गण्डकी प्रदेशका विशिष्ट बाली — <strong>कफी, सुन्तला, मुस्ताङ स्याउ</strong> — विशेष प्राथमिकतामा राख्नुस्।</span></div>
+      <div class="tip-row"><span class="tip-icon">⚠️</span><span>नकारात्मक अंकका कारण <strong>नजान्ने प्रश्न Skip</strong> गर्नु नै बुद्धिमानी हो। (-०.४ अंक प्रति गलत)</span></div>
+      <div class="tip-row"><span class="tip-icon">📅</span><span>ऐन र नियमहरूका <strong>साल/वर्ष</strong> याद गर्नुस् — धारा ३६, ऐन २०४५, ADS 2015–2035।</span></div>
+      <div class="tip-row"><span class="tip-icon">🎯</span><span>एकाइ १ (८ प्रश्न) सबैभन्दा बढी प्रश्न भएकाले <strong>नीति र कानुन</strong> राम्रोसँग पढ्नुस्।</span></div>
+      <div class="tip-row"><span class="tip-icon">🔬</span><span>बीउको ट्याग रंग: <strong>Breeder=Golden, Foundation=White, Certified=Blue, Improved=Yellow</strong></span></div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="sec-header">
+    <div class="sec-badge">Quick Ref</div>
+    <div class="sec-title">द्रुत सन्दर्भ तालिका</div>
+  </div>
+  <div class="sec-divider"></div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px;">
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border2);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">महत्वपूर्ण तथ्यहरू — Key Facts</div>
+    <div id="quickRefRows"></div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="bnav-item" onclick="location.href='index.html'"><div class="bnav-icon">🏠</div><div>Home</div></div>
+  <div class="bnav-item" onclick="location.href='gandaki_krishi_quiz.html'"><div class="bnav-icon">🎯</div><div>Quiz</div></div>
+  <div class="bnav-item" onclick="location.href='written.html'"><div class="bnav-icon">✍️</div><div>Written</div></div>
+  <div class="bnav-item" onclick="location.href='index.html'"><div class="bnav-icon">📊</div><div>Report</div></div>
+  <div class="bnav-item active"><div class="bnav-icon">📚</div><div>Syllabus</div><div class="bnav-dot"></div></div>
+</div>
+
+<div class="scroll-top" id="stBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+/* Particles */
+(function(){
+  const pl=document.getElementById('pl');
+  const em=['🌾','🌱','🍃','🌿','📖','✏️','📋','🌻'];
+  for(let i=0;i<12;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=em[i%em.length];
+    p.style.cssText=`left:${Math.random()*100}%;font-size:${10+Math.random()*10}px;animation-duration:${12+Math.random()*16}s;animation-delay:${Math.random()*16}s`;
+    pl.appendChild(p);
+  }
+})();
+
+/* Toggle unit accordion */
+function toggleUnit(id){
+  const card=document.getElementById(id);
+  const wasOpen=card.classList.contains('open');
+  // close all
+  document.querySelectorAll('.unit-card.open').forEach(c=>c.classList.remove('open'));
+  if(!wasOpen) card.classList.add('open');
+}
+// Open first unit by default
+document.getElementById('unit1').classList.add('open');
+
+/* Scroll top */
+window.addEventListener('scroll',()=>{
+  document.getElementById('stBtn').classList.toggle('show',window.scrollY>300);
+});
+
+/* Quick Reference Data */
+const facts=[
+  ['संविधान धारा','धारा ३६ — खाद्य सम्बन्धी हक'],
+  ['ADS अवधि','2015–2035 (२० वर्ष)'],
+  ['बीउ बिजन ऐन','२०४५ (संशोधन: २०६४)'],
+  ['विषादी ऐन','२०७६'],
+  ['MCQ प्रश्न','५० × २ = १०० अंक'],
+  ['नकारात्मक अंक','२०% = ०.४ प्रति गलत'],
+  ['उत्तीर्णाङ्क','४०'],
+  ['अन्तर्वार्ता','२० अंक'],
+  ['Foundation Seed रंग','सेतो (White)'],
+  ['Urea नाइट्रोजन','४६%'],
+  ['तटस्थ pH','७.०'],
+  ['IPM पहिलो कदम','खेत निरीक्षण (Monitoring)'],
+  ['Diffusion Theory','Everett Rogers'],
+  ['CRI अवस्था','गहुँमा सिँचाइ — रोपेको २०-२५ दिन'],
+  ['Bordeaux Mix','CuSO₄ : Lime : Water = 1:1:100'],
+  ['Mango Pit Size','१×१×१ मिटर'],
+];
+
+const tbody=document.getElementById('quickRefRows');
+facts.forEach(([k,v],i)=>{
+  tbody.innerHTML+=`
+    <div style="display:flex;justify-content:space-between;align-items:center;
+      padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04);
+      font-size:12px;${i%2===0?'background:rgba(255,255,255,.02)':''}">
+      <span style="color:var(--muted);flex:1">${k}</span>
+      <span style="color:#fff;font-weight:600;font-family:'DM Mono',monospace;font-size:11px;text-align:right;flex:1.2">${v}</span>
+    </div>`;
+});
+
+/* Load localStorage stats */
+try{
+  const hist=JSON.parse(localStorage.getItem('krishi_quiz_history')||'[]');
+  if(hist.length>0){
+    const ps=document.getElementById('studyProgress');
+    ps.style.display='block';
+    const units=[
+      'एकाइ १: नीति','एकाइ २: बागवानी','एकाइ ३: प्रसार',
+      'एकाइ ४: बाली विज्ञान','एकाइ ५: संरक्षण',
+      'एकाइ ६: अर्थशास्त्र','एकाइ ७: माटो'
+    ];
+    const rows=document.getElementById('progRows');
+    // mock different pct per unit from overall score
+    const latestScore=hist[hist.length-1]?.pct||0;
+    const pcts=[latestScore,latestScore*0.9,latestScore*1.1,latestScore*0.8,
+                latestScore*1.05,latestScore*0.95,latestScore*1.02].map(v=>Math.min(100,Math.max(0,Math.round(v))));
+    units.forEach((u,i)=>{
+      rows.innerHTML+=`
+        <div class="unit-prog-row">
+          <div class="upr-name">${u}</div>
+          <div class="upr-bar"><div class="upr-fill" style="width:${pcts[i]}%"></div></div>
+          <div class="upr-val">${pcts[i]}%</div>
+        </div>`;
+    });
+  }
+}catch(e){}
+
+/* Animate bars on load */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.wb-fill,.upr-fill').forEach(el=>{
+      const w=el.style.width; el.style.width='0';
+      requestAnimationFrame(()=>{ setTimeout(()=>el.style.width=w,50); });
+    });
+  },300);
+});
+</script>
+</body>
+</html>
