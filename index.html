@@ -1,801 +1,1109 @@
 <!DOCTYPE html>
 <html lang="ne">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>गण्डकी कृषि लोकसेवा — तयारी केन्द्र</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>गण्डकी कृषि लोकसेवा — तयारी केन्द्र</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
 
-<style>
-:root {
-  --soil:       #1a0f00;
-  --earth:      #2d1a00;
-  --bark:       #3d2b00;
-  --moss:       #2d5a1b;
-  --leaf:       #4a8c2a;
-  --sprout:     #7ac142;
-  --neon:       #aaff44;
-  --gold:       #f5c842;
-  --amber:      #ff9800;
-  --sky:        #a8d8ea;
-  --cream:      #fdf6e3;
-  --text:       #e8f5e0;
-  --muted:      rgba(232,245,224,0.5);
-  --card:       rgba(255,255,255,0.055);
-  --border:     rgba(170,255,68,0.15);
-  --glow:       rgba(170,255,68,0.25);
-}
+  <style>
+    :root {
+      --soil: #1a0f00;
+      --earth: #2d1a00;
+      --bark: #3d2b00;
+      --moss: #2d5a1b;
+      --leaf: #4a8c2a;
+      --sprout: #7ac142;
+      --neon: #aaff44;
+      --gold: #f5c842;
+      --amber: #ff9800;
+      --sky: #a8d8ea;
+      --cream: #fdf6e3;
+      --text: #e8f5e0;
+      --muted: rgba(232, 245, 224, 0.5);
+      --card: rgba(255, 255, 255, 0.055);
+      --border: rgba(170, 255, 68, 0.15);
+      --glow: rgba(170, 255, 68, 0.25);
+    }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--soil);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  cursor: default;
-}
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--soil);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: default;
+    }
 
-/* ── ANIMATED FIELD BG ── */
-.bg-canvas {
-  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
-}
-.bg-canvas::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 90% 60% at 10% 90%, rgba(45,90,27,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 50% at 90% 10%, rgba(74,140,42,0.2) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(29,15,0,0.6) 0%, transparent 80%);
-  animation: bgShift 12s ease-in-out infinite alternate;
-}
-@keyframes bgShift {
-  0%   { opacity: 0.8; transform: scale(1); }
-  100% { opacity: 1;   transform: scale(1.05); }
-}
+    /* ── ANIMATED FIELD BG ── */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
 
-/* Grain texture */
-.bg-canvas::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.4;
-}
+    .bg-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 60% at 10% 90%, rgba(45, 90, 27, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 90% 10%, rgba(74, 140, 42, 0.2) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(29, 15, 0, 0.6) 0%, transparent 80%);
+      animation: bgShift 12s ease-in-out infinite alternate;
+    }
 
-/* Floating particles */
-.particle {
-  position: fixed;
-  font-size: 18px;
-  pointer-events: none;
-  animation: rise linear infinite;
-  opacity: 0;
-}
-@keyframes rise {
-  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
-  8%   { opacity: 0.18; }
-  92%  { opacity: 0.18; }
-  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-}
+    @keyframes bgShift {
+      0% {
+        opacity: 0.8;
+        transform: scale(1);
+      }
 
-/* ── LAYOUT ── */
-.page { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 18px 100px; }
+      100% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
 
-/* ── TOP NAV ── */
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0 10px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 6px;
-  animation: fadeDown 0.6s ease both;
-}
-.nav-logo {
-  font-family: 'Tiro Devanagari Hindi', serif;
-  font-size: 15px;
-  color: var(--neon);
-  text-shadow: 0 0 20px rgba(170,255,68,0.5);
-  line-height: 1.3;
-}
-.nav-logo span { display: block; font-size: 10px; color: var(--muted); font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; }
-.nav-right { display: flex; align-items: center; gap: 10px; }
-.streak-pill {
-  background: rgba(245,200,66,0.12);
-  border: 1px solid rgba(245,200,66,0.3);
-  color: var(--gold);
-  font-size: 12px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 20px;
-}
-.avatar {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--moss), var(--sprout));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  border: 2px solid var(--border);
-}
+    /* Grain texture */
+    .bg-canvas::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
 
-/* ── HERO ── */
-.hero {
-  padding: 28px 0 20px;
-  animation: fadeUp 0.7s 0.1s ease both;
-}
-.hero-greeting {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.hero-title {
-  font-family: 'Tiro Devanagari Hindi', serif;
-  font-size: 28px;
-  line-height: 1.35;
-  color: #fff;
-  margin-bottom: 6px;
-}
-.hero-title em {
-  font-style: normal;
-  color: var(--neon);
-  text-shadow: 0 0 25px rgba(170,255,68,0.4);
-}
-.hero-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      font-size: 18px;
+      pointer-events: none;
+      animation: rise linear infinite;
+      opacity: 0;
+    }
 
-/* ── TODAY'S GOAL CARD ── */
-.goal-card {
-  background: linear-gradient(135deg, rgba(74,140,42,0.25) 0%, rgba(45,90,27,0.2) 100%);
-  border: 1px solid rgba(122,193,66,0.3);
-  border-radius: 20px;
-  padding: 18px;
-  margin: 20px 0;
-  position: relative;
-  overflow: hidden;
-  animation: fadeUp 0.7s 0.2s ease both;
-}
-.goal-card::before {
-  content: '🌾';
-  position: absolute;
-  right: -10px; top: -10px;
-  font-size: 70px;
-  opacity: 0.08;
-  transform: rotate(15deg);
-}
-.goal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
-.goal-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.goal-title { font-size: 15px; font-weight: 700; color: #fff; }
-.goal-score {
-  font-size: 28px; font-weight: 800; color: var(--neon);
-  text-shadow: 0 0 20px rgba(170,255,68,0.4);
-  line-height: 1;
-}
-.goal-score span { font-size: 13px; color: var(--muted); font-weight: 400; }
-.goal-bar-wrap { height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
-.goal-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--leaf), var(--neon));
-  border-radius: 6px;
-  box-shadow: 0 0 12px rgba(170,255,68,0.4);
-  transition: width 1.2s cubic-bezier(.2,.8,.3,1);
-}
-.goal-stats { display: flex; gap: 14px; }
-.gs { font-size: 12px; color: var(--muted); }
-.gs b { color: var(--text); }
+    @keyframes rise {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
 
-/* ── SECTION TITLE ── */
-.section-title {
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 26px 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+      8% {
+        opacity: 0.18;
+      }
 
-/* ── MAIN MENU CARDS ── */
-.menu-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  animation: fadeUp 0.7s 0.3s ease both;
-}
+      92% {
+        opacity: 0.18;
+      }
 
-.menu-card {
-  position: relative;
-  border-radius: 22px;
-  padding: 20px 16px;
-  text-decoration: none;
-  color: var(--text);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.25s cubic-bezier(.2,.8,.3,1), box-shadow 0.25s;
-  display: flex;
-  flex-direction: column;
-  min-height: 150px;
-  border: 1px solid transparent;
-}
-.menu-card:hover { transform: translateY(-5px) scale(1.02); }
-.menu-card:active { transform: scale(0.97); }
+      100% {
+        transform: translateY(-10vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
 
-.menu-card.quiz {
-  background: linear-gradient(145deg, #1a4a0a 0%, #2d7a1a 100%);
-  border-color: rgba(122,193,66,0.4);
-  box-shadow: 0 8px 32px rgba(45,122,26,0.4);
-  grid-column: 1 / -1;
-  min-height: 130px;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-}
-.menu-card.quiz:hover { box-shadow: 0 16px 50px rgba(45,122,26,0.6); }
+    /* ── LAYOUT ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 18px 100px;
+    }
 
-.menu-card.written {
-  background: linear-gradient(145deg, #2a1a00 0%, #5a3800 100%);
-  border-color: rgba(245,200,66,0.3);
-  box-shadow: 0 8px 32px rgba(90,56,0,0.4);
-}
-.menu-card.report {
-  background: linear-gradient(145deg, #001a2a 0%, #003a5a 100%);
-  border-color: rgba(168,216,234,0.25);
-  box-shadow: 0 8px 32px rgba(0,58,90,0.4);
-}
-.menu-card.syllabus {
-  background: linear-gradient(145deg, #1a002a 0%, #3a005a 100%);
-  border-color: rgba(200,150,255,0.25);
-  box-shadow: 0 8px 32px rgba(58,0,90,0.4);
-  grid-column: 1 / -1;
-}
-.menu-card.daily {
-  background: linear-gradient(145deg, #2a1a00 0%, #5a2800 100%);
-  border-color: rgba(255,152,0,0.3);
-  box-shadow: 0 8px 32px rgba(90,40,0,0.4);
-  grid-column: 1 / -1;
-}
+    /* ── TOP NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 6px;
+      animation: fadeDown 0.6s ease both;
+    }
 
-.card-icon {
-  font-size: 36px;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.2));
-}
-.menu-card.quiz .card-icon { font-size: 48px; }
+    .nav-logo {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 15px;
+      color: var(--neon);
+      text-shadow: 0 0 20px rgba(170, 255, 68, 0.5);
+      line-height: 1.3;
+    }
 
-.card-body { flex: 1; }
-.card-tag {
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.5;
-  margin-bottom: 4px;
-}
-.card-name {
-  font-family: 'Tiro Devanagari Hindi', serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 5px;
-  line-height: 1.3;
-}
-.menu-card.quiz .card-name { font-size: 20px; }
-.card-desc { font-size: 12px; opacity: 0.6; line-height: 1.5; }
-.card-arrow {
-  position: absolute;
-  bottom: 14px; right: 16px;
-  width: 28px; height: 28px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-  transition: all 0.2s;
-}
-.menu-card:hover .card-arrow { background: rgba(255,255,255,0.2); transform: translateX(2px); }
+    .nav-logo span {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
 
-/* Badge on card */
-.card-badge {
-  position: absolute;
-  top: 14px; right: 14px;
-  background: var(--neon);
-  color: #000;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: 10px;
-  text-transform: uppercase;
-}
-.card-badge.gold { background: var(--gold); }
-.card-badge.sky { background: var(--sky); }
-.card-badge.amber { background: var(--amber); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-/* ── QUICK STATS STRIP ── */
-.stats-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  animation: fadeUp 0.7s 0.4s ease both;
-}
-.stat-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px 10px;
-  text-align: center;
-}
-.stat-box .sv { font-size: 22px; font-weight: 800; color: var(--neon); display: block; line-height: 1; margin-bottom: 3px; }
-.stat-box .sl { font-size: 11px; color: var(--muted); }
+    .streak-pill {
+      background: rgba(245, 200, 66, 0.12);
+      border: 1px solid rgba(245, 200, 66, 0.3);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
 
-/* ── RECENT ACTIVITY ── */
-.activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  animation: fadeUp 0.7s 0.5s ease both;
-}
-.activity-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.activity-item:hover { background: rgba(255,255,255,0.08); transform: translateX(4px); }
-.act-icon {
-  width: 40px; height: 40px;
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.act-icon.green { background: rgba(74,140,42,0.25); }
-.act-icon.gold  { background: rgba(245,200,66,0.15); }
-.act-icon.blue  { background: rgba(168,216,234,0.15); }
-.act-info { flex: 1; }
-.act-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 2px; }
-.act-sub   { font-size: 11px; color: var(--muted); }
-.act-score { font-size: 14px; font-weight: 800; color: var(--neon); }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--moss), var(--sprout));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      border: 2px solid var(--border);
+    }
 
-/* ── MOTIVATIONAL QUOTE ── */
-.quote-card {
-  background: linear-gradient(135deg, rgba(45,90,27,0.2), rgba(74,140,42,0.1));
-  border: 1px solid rgba(122,193,66,0.2);
-  border-radius: 18px;
-  padding: 18px;
-  text-align: center;
-  animation: fadeUp 0.7s 0.6s ease both;
-  position: relative;
-  overflow: hidden;
-}
-.quote-card::before {
-  content: '"';
-  position: absolute;
-  left: 10px; top: -20px;
-  font-size: 120px;
-  font-family: serif;
-  color: rgba(170,255,68,0.06);
-  line-height: 1;
-}
-.quote-text {
-  font-family: 'Tiro Devanagari Hindi', serif;
-  font-size: 14px;
-  line-height: 1.8;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 8px;
-}
-.quote-author { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+    /* ── HERO ── */
+    .hero {
+      padding: 28px 0 20px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
 
-/* ── BOTTOM NAV ── */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  background: rgba(15, 8, 0, 0.92);
-  border-top: 1px solid var(--border);
-  backdrop-filter: blur(20px);
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0 16px;
-  z-index: 100;
-}
-.bnav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.5px;
-  transition: all 0.2s;
-  padding: 4px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-.bnav-item.active { color: var(--neon); }
-.bnav-item:hover  { color: var(--text); }
-.bnav-icon { font-size: 20px; }
-.bnav-dot {
-  width: 5px; height: 5px;
-  background: var(--neon);
-  border-radius: 50%;
-  margin: 0 auto;
-  display: none;
-}
-.bnav-item.active .bnav-dot { display: block; }
+    .hero-greeting {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
 
-/* ── MODAL (Report Preview) ── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(6px);
-  z-index: 200;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal-sheet {
-  width: 100%;
-  max-width: 480px;
-  background: #1a0f00;
-  border-top: 1px solid var(--border);
-  border-radius: 28px 28px 0 0;
-  padding: 24px 20px 40px;
-  transform: translateY(100%);
-  transition: transform 0.4s cubic-bezier(.2,.8,.3,1);
-  max-height: 85vh;
-  overflow-y: auto;
-}
-.modal-overlay.open .modal-sheet { transform: translateY(0); }
-.modal-handle {
-  width: 40px; height: 4px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 2px;
-  margin: 0 auto 20px;
-}
-.modal-title {
-  font-family: 'Tiro Devanagari Hindi', serif;
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 18px;
-}
-.report-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-.report-row:last-child { border-bottom: none; }
-.report-row .rl { color: var(--muted); }
-.report-row .rv { font-weight: 700; color: #fff; }
-.report-empty { text-align: center; padding: 30px; color: var(--muted); font-size: 14px; }
+    .hero-title {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 28px;
+      line-height: 1.35;
+      color: #fff;
+      margin-bottom: 6px;
+    }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp   { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-@keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+    .hero-title em {
+      font-style: normal;
+      color: var(--neon);
+      text-shadow: 0 0 25px rgba(170, 255, 68, 0.4);
+    }
 
-/* Pulse glow on quiz card */
-.menu-card.quiz::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(122,193,66,0.2), transparent 60%);
-  animation: cardGlow 3s ease-in-out infinite alternate;
-}
-@keyframes cardGlow {
-  0%   { opacity: 0.5; }
-  100% { opacity: 1; }
-}
+    .hero-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
 
-/* Scroll indicator */
-.scroll-hint {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  padding: 8px 0;
-  animation: bounce 2s infinite;
-}
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(4px); }
-}
-</style>
+    /* ── TODAY'S GOAL CARD ── */
+    .goal-card {
+      background: linear-gradient(135deg, rgba(74, 140, 42, 0.25) 0%, rgba(45, 90, 27, 0.2) 100%);
+      border: 1px solid rgba(122, 193, 66, 0.3);
+      border-radius: 20px;
+      padding: 18px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .goal-card::before {
+      content: '🌾';
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      font-size: 70px;
+      opacity: 0.08;
+      transform: rotate(15deg);
+    }
+
+    .goal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .goal-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .goal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .goal-score {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--neon);
+      text-shadow: 0 0 20px rgba(170, 255, 68, 0.4);
+      line-height: 1;
+    }
+
+    .goal-score span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .goal-bar-wrap {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .goal-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--leaf), var(--neon));
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(170, 255, 68, 0.4);
+      transition: width 1.2s cubic-bezier(.2, .8, .3, 1);
+    }
+
+    .goal-stats {
+      display: flex;
+      gap: 14px;
+    }
+
+    .gs {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .gs b {
+      color: var(--text);
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 26px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── MAIN MENU CARDS ── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .menu-card {
+      position: relative;
+      border-radius: 22px;
+      padding: 20px 16px;
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(.2, .8, .3, 1), box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+      min-height: 150px;
+      border: 1px solid transparent;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .menu-card:active {
+      transform: scale(0.97);
+    }
+
+    .menu-card.quiz {
+      background: linear-gradient(145deg, #1a4a0a 0%, #2d7a1a 100%);
+      border-color: rgba(122, 193, 66, 0.4);
+      box-shadow: 0 8px 32px rgba(45, 122, 26, 0.4);
+      grid-column: 1 / -1;
+      min-height: 130px;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu-card.quiz:hover {
+      box-shadow: 0 16px 50px rgba(45, 122, 26, 0.6);
+    }
+
+    .menu-card.written {
+      background: linear-gradient(145deg, #2a1a00 0%, #5a3800 100%);
+      border-color: rgba(245, 200, 66, 0.3);
+      box-shadow: 0 8px 32px rgba(90, 56, 0, 0.4);
+    }
+
+    .menu-card.report {
+      background: linear-gradient(145deg, #001a2a 0%, #003a5a 100%);
+      border-color: rgba(168, 216, 234, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 58, 90, 0.4);
+    }
+
+    .menu-card.syllabus {
+      background: linear-gradient(145deg, #1a002a 0%, #3a005a 100%);
+      border-color: rgba(200, 150, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(58, 0, 90, 0.4);
+      grid-column: 1 / -1;
+    }
+
+    .menu-card.daily {
+      background: linear-gradient(145deg, #2a1a00 0%, #5a2800 100%);
+      border-color: rgba(255, 152, 0, 0.3);
+      box-shadow: 0 8px 32px rgba(90, 40, 0, 0.4);
+      grid-column: 1 / -1;
+    }
+
+    .card-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
+    }
+
+    .menu-card.quiz .card-icon {
+      font-size: 48px;
+    }
+
+    .card-body {
+      flex: 1;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-bottom: 4px;
+    }
+
+    .card-name {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+
+    .menu-card.quiz .card-name {
+      font-size: 20px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 14px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .menu-card:hover .card-arrow {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(2px);
+    }
+
+    /* Badge on card */
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--neon);
+      color: #000;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+
+    .card-badge.gold {
+      background: var(--gold);
+    }
+
+    .card-badge.sky {
+      background: var(--sky);
+    }
+
+    .card-badge.amber {
+      background: var(--amber);
+    }
+
+    /* ── QUICK STATS STRIP ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .stat-box .sv {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--neon);
+      display: block;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .stat-box .sl {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── RECENT ACTIVITY ── */
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .activity-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+    }
+
+    .act-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .act-icon.green {
+      background: rgba(74, 140, 42, 0.25);
+    }
+
+    .act-icon.gold {
+      background: rgba(245, 200, 66, 0.15);
+    }
+
+    .act-icon.blue {
+      background: rgba(168, 216, 234, 0.15);
+    }
+
+    .act-info {
+      flex: 1;
+    }
+
+    .act-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .act-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .act-score {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--neon);
+    }
+
+    /* ── MOTIVATIONAL QUOTE ── */
+    .quote-card {
+      background: linear-gradient(135deg, rgba(45, 90, 27, 0.2), rgba(74, 140, 42, 0.1));
+      border: 1px solid rgba(122, 193, 66, 0.2);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      animation: fadeUp 0.7s 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-card::before {
+      content: '"';
+      position: absolute;
+      left: 10px;
+      top: -20px;
+      font-size: 120px;
+      font-family: serif;
+      color: rgba(170, 255, 68, 0.06);
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 8px;
+    }
+
+    .quote-author {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: rgba(15, 8, 0, 0.92);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 16px;
+      z-index: 100;
+    }
+
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      padding: 4px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .bnav-item.active {
+      color: var(--neon);
+    }
+
+    .bnav-item:hover {
+      color: var(--text);
+    }
+
+    .bnav-icon {
+      font-size: 20px;
+    }
+
+    .bnav-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--neon);
+      border-radius: 50%;
+      margin: 0 auto;
+      display: none;
+    }
+
+    .bnav-item.active .bnav-dot {
+      display: block;
+    }
+
+    /* ── MODAL (Report Preview) ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 480px;
+      background: #1a0f00;
+      border-top: 1px solid var(--border);
+      border-radius: 28px 28px 0 0;
+      padding: 24px 20px 40px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(.2, .8, .3, 1);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 40px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+
+    .modal-title {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 18px;
+    }
+
+    .report-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .report-row:last-child {
+      border-bottom: none;
+    }
+
+    .report-row .rl {
+      color: var(--muted);
+    }
+
+    .report-row .rv {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .report-empty {
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Pulse glow on quiz card */
+    .menu-card.quiz::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(122, 193, 66, 0.2), transparent 60%);
+      animation: cardGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardGlow {
+      0% {
+        opacity: 0.5;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 8px 0;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(4px);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Background -->
-<div class="bg-canvas"></div>
-<div id="particleLayer"></div>
+  <!-- Background -->
+  <div class="bg-canvas"></div>
+  <div id="particleLayer"></div>
 
-<div class="page">
+  <div class="page">
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">
-      🌾 गण्डकी कृषि लोकसेवा
-      <span>Preparation Hub • 2082</span>
-    </div>
-    <div class="nav-right">
-      <div class="streak-pill" id="streakPill">🔥 0 Days</div>
-      <div class="avatar">👨‍🌾</div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-greeting" id="greeting">नमस्कार 🙏</div>
-    <h1 class="hero-title">
-      <em>४थो तह कृषि</em> को<br>तयारी गरौँ!
-    </h1>
-    <p class="hero-sub">गण्डकी प्रदेश लोकसेवा आयोग • परीक्षा तयारी प्लेटफर्म</p>
-  </div>
-
-  <!-- TODAY'S GOAL CARD -->
-  <div class="goal-card">
-    <div class="goal-top">
-      <div>
-        <div class="goal-label">आजको प्रगति</div>
-        <div class="goal-title">दैनिक लक्ष्य: ५० MCQ</div>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">
+        🌾 गण्डकी कृषि लोकसेवा
+        <span>Preparation Hub • 2082</span>
       </div>
-      <div>
-        <div class="goal-score" id="goalScore">0 <span>/ 50</span></div>
+      <div class="nav-right">
+        <div class="streak-pill" id="streakPill">🔥 0 Days</div>
+        <div class="avatar" onclick="sendWhatsAppReport()">👨‍🌾</div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-greeting" id="greeting">नमस्कार 🙏</div>
+      <h1 class="hero-title">
+        <em>४थो तह कृषि</em> को<br>तयारी गरौँ!
+      </h1>
+      <p class="hero-sub">गण्डकी प्रदेश लोकसेवा आयोग • परीक्षा तयारी प्लेटफर्म</p>
+    </div>
+
+    <!-- TODAY'S GOAL CARD -->
+    <div class="goal-card">
+      <div class="goal-top">
+        <div>
+          <div class="goal-label">आजको प्रगति</div>
+          <div class="goal-title">दैनिक लक्ष्य: ५० MCQ</div>
+        </div>
+        <div>
+          <div class="goal-score" id="goalScore">0 <span>/ 50</span></div>
+        </div>
+      </div>
+      <div class="goal-bar-wrap">
+        <div class="goal-bar" id="goalBar" style="width: 0%"></div>
+      </div>
+      <div class="goal-stats">
+        <div class="gs">✅ सही: <b id="gs-correct">0</b></div>
+        <div class="gs">❌ गलत: <b id="gs-wrong">0</b></div>
+        <div class="gs">📝 परीक्षाहरू: <b id="gs-total">0</b></div>
       </div>
     </div>
-    <div class="goal-bar-wrap">
-      <div class="goal-bar" id="goalBar" style="width: 0%"></div>
-    </div>
-    <div class="goal-stats">
-      <div class="gs">✅ सही: <b id="gs-correct">0</b></div>
-      <div class="gs">❌ गलत: <b id="gs-wrong">0</b></div>
-      <div class="gs">📝 परीक्षाहरू: <b id="gs-total">0</b></div>
-    </div>
-  </div>
 
-  <!-- MAIN MENU -->
-  <div class="section-title">मुख्य विभागहरू</div>
+    <!-- MAIN MENU -->
+    <div class="section-title">मुख्य विभागहरू</div>
 
-  <div class="menu-grid">
+    <div class="menu-grid">
 
-    <!-- QUIZ -->
-    <div class="menu-card quiz" onclick="navigate('gandaki_krishi_quiz.html')">
-      <div class="card-badge">HOT 🔥</div>
-      <div class="card-icon">🎯</div>
-      <div class="card-body">
-        <div class="card-tag">MCQ Practice</div>
-        <div class="card-name">क्विज परीक्षा</div>
-        <div class="card-desc">५० MCQ • नकारात्मक अंक • Timer सहित</div>
+      <!-- QUIZ -->
+      <div class="menu-card quiz" onclick="navigate('gandaki_krishi_quiz.html')">
+        <div class="card-badge">HOT 🔥</div>
+        <div class="card-icon">🎯</div>
+        <div class="card-body">
+          <div class="card-tag">MCQ Practice</div>
+          <div class="card-name">क्विज परीक्षा</div>
+          <div class="card-desc">५० MCQ • नकारात्मक अंक • Timer सहित</div>
+        </div>
+        <div class="card-arrow">→</div>
       </div>
-      <div class="card-arrow">→</div>
-    </div>
 
-    <!-- WRITTEN EXAM -->
-    <div class="menu-card written" onclick="navigate('written.html')">
-      <div class="card-badge gold">NEW</div>
-      <div class="card-icon">✍️</div>
-      <div class="card-body">
-        <div class="card-tag">Subjective</div>
-        <div class="card-name">लिखित परीक्षा</div>
-        <div class="card-desc">दीर्घ उत्तर र विश्लेषण</div>
+      <!-- WRITTEN EXAM -->
+      <div class="menu-card written" onclick="navigate('written.html')">
+        <div class="card-badge gold">NEW</div>
+        <div class="card-icon">✍️</div>
+        <div class="card-body">
+          <div class="card-tag">Subjective</div>
+          <div class="card-name">लिखित परीक्षा</div>
+          <div class="card-desc">दीर्घ उत्तर र विश्लेषण</div>
+        </div>
+        <div class="card-arrow">→</div>
       </div>
-      <div class="card-arrow">→</div>
-    </div>
 
-    <!-- REPORT -->
-    <div class="menu-card report" onclick="openReport()">
-      <div class="card-badge sky">LIVE</div>
-      <div class="card-icon">📊</div>
-      <div class="card-body">
-        <div class="card-tag">Analytics</div>
-        <div class="card-name">मेरो रिपोर्ट</div>
-        <div class="card-desc">प्रगति र इतिहास हेर्नुस्</div>
+      <!-- REPORT -->
+      <div class="menu-card report" onclick="openReport()">
+        <div class="card-badge sky">LIVE</div>
+        <div class="card-icon">📊</div>
+        <div class="card-body">
+          <div class="card-tag">Analytics</div>
+          <div class="card-name">मेरो रिपोर्ट</div>
+          <div class="card-desc">प्रगति र इतिहास हेर्नुस्</div>
+        </div>
+        <div class="card-arrow">→</div>
       </div>
-      <div class="card-arrow">→</div>
-    </div>
 
-    <!-- SYLLABUS -->
-    <div class="menu-card syllabus" onclick="navigate('syllabus.html')">
-      <div class="card-icon">📚</div>
-      <div class="card-body">
-        <div class="card-tag">Curriculum</div>
-        <div class="card-name">पाठ्यक्रम</div>
-        <div class="card-desc">विषयवार पाठ्यक्रम हेर्नुस्</div>
+      <!-- SYLLABUS -->
+      <div class="menu-card syllabus" onclick="navigate('syllabus.html')">
+        <div class="card-icon">📚</div>
+        <div class="card-body">
+          <div class="card-tag">Curriculum</div>
+          <div class="card-name">पाठ्यक्रम</div>
+          <div class="card-desc">विषयवार पाठ्यक्रम हेर्नुस्</div>
+        </div>
+        <div class="card-arrow">→</div>
       </div>
-      <div class="card-arrow">→</div>
-    </div>
 
-    <!-- DAILY CHALLENGE -->
-    <div class="menu-card daily" onclick="navigate('gandaki_krishi_quiz.html')">
-      <div class="card-icon">⚡</div>
-      <div class="card-body">
-        <div class="card-tag">Daily Challenge</div>
-        <div class="card-name">आजको चुनौती</div>
-        <div class="card-desc">हरेक दिन नयाँ प्रश्नहरू • Streak कमाउनुस् 🔥</div>
+      <!-- DAILY CHALLENGE -->
+      <div class="menu-card daily" onclick="navigate('gandaki_krishi_quiz.html')">
+        <div class="card-icon">⚡</div>
+        <div class="card-body">
+          <div class="card-tag">Daily Challenge</div>
+          <div class="card-name">आजको चुनौती</div>
+          <div class="card-desc">हरेक दिन नयाँ प्रश्नहरू • Streak कमाउनुस् 🔥</div>
+        </div>
+        <div class="card-arrow">→</div>
       </div>
-      <div class="card-arrow">→</div>
+
     </div>
 
+    <!-- QUICK STATS -->
+    <div class="section-title">कुल तथ्यांक</div>
+    <div class="stats-strip">
+      <div class="stat-box"><span class="sv" id="statAttempted">0</span><span class="sl">प्रयास</span></div>
+      <div class="stat-box"><span class="sv" id="statAccuracy">0%</span><span class="sl">Accuracy</span></div>
+      <div class="stat-box"><span class="sv" id="statBest">0</span><span class="sl">Best Score</span></div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="section-title">हालसालैको गतिविधि</div>
+    <div class="activity-list" id="activityList">
+      <div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">
+        अझसम्म कुनै गतिविधि छैन।<br>
+        <span style="font-size:12px;">क्विज सुरु गरेर सुरुवात गर्नुस्! 🌱</span>
+      </div>
+    </div>
+
+    <!-- MOTIVATIONAL QUOTE -->
+    <div class="section-title">प्रेरणादायी उद्धरण</div>
+    <div class="quote-card">
+      <div class="quote-text" id="quoteText">मेहनत नगरी सफलता पाइँदैन। हरेक दिनको अभ्यासले लक्ष्यमा पुर्‍याउँछ।</div>
+      <div class="quote-author">— गण्डकी कृषि लोकसेवा तयारी</div>
+    </div>
+    <div class="scroll-hint">↓ तल स्क्रोल गर्नुस्</div>
+
   </div>
 
-  <!-- QUICK STATS -->
-  <div class="section-title">कुल तथ्यांक</div>
-  <div class="stats-strip">
-    <div class="stat-box"><span class="sv" id="statAttempted">0</span><span class="sl">प्रयास</span></div>
-    <div class="stat-box"><span class="sv" id="statAccuracy">0%</span><span class="sl">Accuracy</span></div>
-    <div class="stat-box"><span class="sv" id="statBest">0</span><span class="sl">Best Score</span></div>
-  </div>
-
-  <!-- RECENT ACTIVITY -->
-  <div class="section-title">हालसालैको गतिविधि</div>
-  <div class="activity-list" id="activityList">
-    <div style="text-align:center;padding:24px;color:var(--muted);font-size:14px;">
-      अझसम्म कुनै गतिविधि छैन।<br>
-      <span style="font-size:12px;">क्विज सुरु गरेर सुरुवात गर्नुस्! 🌱</span>
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <div class="bnav-item active" onclick="navigate('home.html')">
+      <div class="bnav-icon">🏠</div>
+      <div>Home</div>
+      <div class="bnav-dot"></div>
+    </div>
+    <div class="bnav-item" onclick="navigate('gandaki_krishi_quiz.html')">
+      <div class="bnav-icon">🎯</div>
+      <div>Quiz</div>
+      <div class="bnav-dot"></div>
+    </div>
+    <div class="bnav-item" onclick="navigate('written.html')">
+      <div class="bnav-icon">✍️</div>
+      <div>Written</div>
+      <div class="bnav-dot"></div>
+    </div>
+    <div class="bnav-item" onclick="openReport()">
+      <div class="bnav-icon">📊</div>
+      <div>Report</div>
+      <div class="bnav-dot"></div>
+    </div>
+    <div class="bnav-item" onclick="navigate('syllabus.html')">
+      <div class="bnav-icon">📚</div>
+      <div>Syllabus</div>
+      <div class="bnav-dot"></div>
     </div>
   </div>
 
-  <!-- MOTIVATIONAL QUOTE -->
-  <div class="section-title">प्रेरणादायी उद्धरण</div>
-  <div class="quote-card">
-    <div class="quote-text" id="quoteText">मेहनत नगरी सफलता पाइँदैन। हरेक दिनको अभ्यासले लक्ष्यमा पुर्‍याउँछ।</div>
-    <div class="quote-author">— गण्डकी कृषि लोकसेवा तयारी</div>
+  <!-- REPORT MODAL -->
+  <div class="modal-overlay" id="reportModal" onclick="closeReport(event)">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">📊 मेरो विस्तृत रिपोर्ट</div>
+      <div id="reportContent"></div>
+    </div>
   </div>
-  <div class="scroll-hint">↓ तल स्क्रोल गर्नुस्</div>
 
-</div>
-
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
-  <div class="bnav-item active" onclick="navigate('home.html')">
-    <div class="bnav-icon">🏠</div>
-    <div>Home</div>
-    <div class="bnav-dot"></div>
-  </div>
-  <div class="bnav-item" onclick="navigate('gandaki_krishi_quiz.html')">
-    <div class="bnav-icon">🎯</div>
-    <div>Quiz</div>
-    <div class="bnav-dot"></div>
-  </div>
-  <div class="bnav-item" onclick="navigate('written.html')">
-    <div class="bnav-icon">✍️</div>
-    <div>Written</div>
-    <div class="bnav-dot"></div>
-  </div>
-  <div class="bnav-item" onclick="openReport()">
-    <div class="bnav-icon">📊</div>
-    <div>Report</div>
-    <div class="bnav-dot"></div>
-  </div>
-  <div class="bnav-item" onclick="navigate('syllabus.html')">
-    <div class="bnav-icon">📚</div>
-    <div>Syllabus</div>
-    <div class="bnav-dot"></div>
-  </div>
-</div>
-
-<!-- REPORT MODAL -->
-<div class="modal-overlay" id="reportModal" onclick="closeReport(event)">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title">📊 मेरो विस्तृत रिपोर्ट</div>
-    <div id="reportContent"></div>
-  </div>
-</div>
-
-<script>
-/* ─── PARTICLES ─── */
-const icons = ['🌾','🌱','🍃','🌿','🪴','🌻','🌽','🥦','🍅','🥕','🌾','🍃'];
-const pl = document.getElementById('particleLayer');
-for (let i = 0; i < 18; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.textContent = icons[i % icons.length];
-  p.style.left = (Math.random() * 100) + '%';
-  p.style.animationDuration = (10 + Math.random() * 14) + 's';
-  p.style.animationDelay = (Math.random() * 12) + 's';
-  p.style.fontSize = (12 + Math.random() * 14) + 'px';
-  pl.appendChild(p);
-}
-
-/* ─── GREETING ─── */
-const hr = new Date().getHours();
-document.getElementById('greeting').textContent =
-  hr < 12 ? '🌅 शुभप्रभात!' :
-  hr < 17 ? '☀️ नमस्कार!' :
-  hr < 21 ? '🌆 शुभसन्ध्या!' : '🌙 शुभरात्रि!';
-
-/* ─── QUOTES ─── */
-const quotes = [
-  'मेहनत नगरी सफलता पाइँदैन। हरेक दिनको अभ्यासले लक्ष्यमा पुर्‍याउँछ।',
-  'एक-एक थोपा पानीले समुद्र बन्छ। एक-एक प्रश्नले सफलता मिल्छ।',
-  'असफलता सफलताको सिँढी हो। हिम्मत नहार, अगाडि बढ।',
-  'आज गरेको मेहनत भोलि फल दिन्छ। लोकसेवा तयारीमा निरन्तर लाग्नुस्।',
-  'ज्ञान नै शक्ति हो। पढ्नुस्, बुझ्नुस्, सफल हुनुस्।',
-];
-document.getElementById('quoteText').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-
-/* ─── LOCAL STORAGE KEYS ─── */
-const LS = {
-  HISTORY: 'krishi_quiz_history',
-  STREAK:  'krishi_streak',
-  LAST:    'krishi_last_date',
-  TODAY:   'krishi_today',
-};
-
-/* ─── STREAK LOGIC ─── */
-function updateStreak() {
-  const today = new Date().toDateString();
-  const last  = localStorage.getItem(LS.LAST);
-  let streak  = parseInt(localStorage.getItem(LS.STREAK) || '0');
-  if (last !== today) {
-    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-    if (last === yesterday.toDateString()) {
-      streak++;
-    } else if (!last) {
-      streak = 1;
-    } else {
-      streak = 1; // reset
+  <script>
+    /* ─── PARTICLES ─── */
+    const icons = ['🌾', '🌱', '🍃', '🌿', '🪴', '🌻', '🌽', '🥦', '🍅', '🥕', '🌾', '🍃'];
+    const pl = document.getElementById('particleLayer');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = icons[i % icons.length];
+      p.style.left = (Math.random() * 100) + '%';
+      p.style.animationDuration = (10 + Math.random() * 14) + 's';
+      p.style.animationDelay = (Math.random() * 12) + 's';
+      p.style.fontSize = (12 + Math.random() * 14) + 'px';
+      pl.appendChild(p);
     }
-    localStorage.setItem(LS.STREAK, streak);
-    localStorage.setItem(LS.LAST, today);
-  }
-  document.getElementById('streakPill').textContent = `🔥 ${streak} Day${streak !== 1 ? 's' : ''}`;
-}
-updateStreak();
 
-/* ─── LOAD STATS FROM LOCALSTORAGE ─── */
-function loadStats() {
-  const history = JSON.parse(localStorage.getItem(LS.HISTORY) || '[]');
-  const today   = new Date().toDateString();
-  const todayData = JSON.parse(localStorage.getItem(LS.TODAY + today) || '{"q":0,"c":0,"w":0}');
+    /* ─── GREETING ─── */
+    const hr = new Date().getHours();
+    document.getElementById('greeting').textContent =
+      hr < 12 ? '🌅 शुभप्रभात!' :
+        hr < 17 ? '☀️ नमस्कार!' :
+          hr < 21 ? '🌆 शुभसन्ध्या!' : '🌙 शुभरात्रि!';
 
-  // Goal bar
-  const attempted = todayData.q || 0;
-  const pct = Math.min(100, (attempted / 50) * 100);
-  document.getElementById('goalScore').innerHTML = `${attempted} <span>/ 50</span>`;
-  document.getElementById('goalBar').style.width = pct + '%';
-  document.getElementById('gs-correct').textContent = todayData.c || 0;
-  document.getElementById('gs-wrong').textContent   = todayData.w || 0;
-  document.getElementById('gs-total').textContent   = history.length;
+    /* ─── QUOTES ─── */
+    const quotes = [
+      'मेहनत नगरी सफलता पाइँदैन। हरेक दिनको अभ्यासले लक्ष्यमा पुर्‍याउँछ।',
+      'एक-एक थोपा पानीले समुद्र बन्छ। एक-एक प्रश्नले सफलता मिल्छ।',
+      'असफलता सफलताको सिँढी हो। हिम्मत नहार, अगाडि बढ।',
+      'आज गरेको मेहनत भोलि फल दिन्छ। लोकसेवा तयारीमा निरन्तर लाग्नुस्।',
+      'ज्ञान नै शक्ति हो। पढ्नुस्, बुझ्नुस्, सफल हुनुस्।',
+    ];
+    document.getElementById('quoteText').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-  // Overall stats
-  let totalQ = 0, totalC = 0, bestScore = 0;
-  history.forEach(h => {
-    totalQ += h.total || 0;
-    totalC += h.correct || 0;
-    if ((h.marks || 0) > bestScore) bestScore = h.marks;
-  });
-  const accuracy = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
-  document.getElementById('statAttempted').textContent = history.length;
-  document.getElementById('statAccuracy').textContent  = accuracy + '%';
-  document.getElementById('statBest').textContent      = bestScore;
+    /* ─── LOCAL STORAGE KEYS ─── */
+    const LS = {
+      HISTORY: 'krishi_quiz_history',
+      STREAK: 'krishi_streak',
+      LAST: 'krishi_last_date',
+      TODAY: 'krishi_today',
+    };
 
-  // Recent activity
-  if (history.length > 0) {
-    const list = document.getElementById('activityList');
-    list.innerHTML = '';
-    const recent = [...history].reverse().slice(0, 4);
-    recent.forEach(h => {
-      const acc = h.total > 0 ? Math.round(h.correct / h.total * 100) : 0;
-      const icon = h.type === 'quiz' ? '🎯' : h.type === 'written' ? '✍️' : '📊';
-      const cls  = h.type === 'quiz' ? 'green' : h.type === 'written' ? 'gold' : 'blue';
-      list.innerHTML += `
+    /* ─── STREAK LOGIC ─── */
+    function updateStreak() {
+      const today = new Date().toDateString();
+      const last = localStorage.getItem(LS.LAST);
+      let streak = parseInt(localStorage.getItem(LS.STREAK) || '0');
+      if (last !== today) {
+        const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+        if (last === yesterday.toDateString()) {
+          streak++;
+        } else if (!last) {
+          streak = 1;
+        } else {
+          streak = 1; // reset
+        }
+        localStorage.setItem(LS.STREAK, streak);
+        localStorage.setItem(LS.LAST, today);
+      }
+      document.getElementById('streakPill').textContent = `🔥 ${streak} Day${streak !== 1 ? 's' : ''}`;
+    }
+    updateStreak();
+
+    /* ─── LOAD STATS FROM LOCALSTORAGE ─── */
+    function loadStats() {
+      const history = JSON.parse(localStorage.getItem(LS.HISTORY) || '[]');
+      const today = new Date().toDateString();
+      const todayData = JSON.parse(localStorage.getItem(LS.TODAY + today) || '{"q":0,"c":0,"w":0}');
+
+      // Goal bar
+      const attempted = todayData.q || 0;
+      const pct = Math.min(100, (attempted / 50) * 100);
+      document.getElementById('goalScore').innerHTML = `${attempted} <span>/ 50</span>`;
+      document.getElementById('goalBar').style.width = pct + '%';
+      document.getElementById('gs-correct').textContent = todayData.c || 0;
+      document.getElementById('gs-wrong').textContent = todayData.w || 0;
+      document.getElementById('gs-total').textContent = history.length;
+
+      // Overall stats
+      let totalQ = 0, totalC = 0, bestScore = 0;
+      history.forEach(h => {
+        totalQ += h.total || 0;
+        totalC += h.correct || 0;
+        if ((h.marks || 0) > bestScore) bestScore = h.marks;
+      });
+      const accuracy = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
+      document.getElementById('statAttempted').textContent = history.length;
+      document.getElementById('statAccuracy').textContent = accuracy + '%';
+      document.getElementById('statBest').textContent = bestScore;
+
+      // Recent activity
+      if (history.length > 0) {
+        const list = document.getElementById('activityList');
+        list.innerHTML = '';
+        const recent = [...history].reverse().slice(0, 4);
+        recent.forEach(h => {
+          const acc = h.total > 0 ? Math.round(h.correct / h.total * 100) : 0;
+          const icon = h.type === 'quiz' ? '🎯' : h.type === 'written' ? '✍️' : '📊';
+          const cls = h.type === 'quiz' ? 'green' : h.type === 'written' ? 'gold' : 'blue';
+          list.innerHTML += `
         <div class="activity-item">
           <div class="act-icon ${cls}">${icon}</div>
           <div class="act-info">
@@ -804,31 +1112,31 @@ function loadStats() {
           </div>
           <div class="act-score">${h.marks >= 0 ? '+' : ''}${h.marks}</div>
         </div>`;
-    });
-  }
-}
-loadStats();
+        });
+      }
+    }
+    loadStats();
 
-/* ─── NAVIGATE ─── */
-function navigate(url) {
-  window.location.href = url;
-}
+    /* ─── NAVIGATE ─── */
+    function navigate(url) {
+      window.location.href = url;
+    }
 
-/* ─── REPORT MODAL ─── */
-function openReport() {
-  const modal = document.getElementById('reportModal');
-  const history = JSON.parse(localStorage.getItem(LS.HISTORY) || '[]');
-  const streak  = parseInt(localStorage.getItem(LS.STREAK) || '0');
-  const content = document.getElementById('reportContent');
+    /* ─── REPORT MODAL ─── */
+    function openReport() {
+      const modal = document.getElementById('reportModal');
+      const history = JSON.parse(localStorage.getItem(LS.HISTORY) || '[]');
+      const streak = parseInt(localStorage.getItem(LS.STREAK) || '0');
+      const content = document.getElementById('reportContent');
 
-  if (history.length === 0) {
-    content.innerHTML = `<div class="report-empty">📭 अझसम्म कुनै परीक्षा दिनुभएको छैन।<br><br><button onclick="navigate('gandaki_krishi_quiz.html')" style="background:var(--sprout);color:#000;border:none;padding:10px 22px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">क्विज सुरु गर्नुस् ▶</button></div>`;
-  } else {
-    let totalQ = 0, totalC = 0, totalW = 0, bestMarks = 0;
-    history.forEach(h => { totalQ += h.total || 0; totalC += h.correct || 0; totalW += h.wrong || 0; if ((h.marks || 0) > bestMarks) bestMarks = h.marks; });
-    const accuracy = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
+      if (history.length === 0) {
+        content.innerHTML = `<div class="report-empty">📭 अझसम्म कुनै परीक्षा दिनुभएको छैन।<br><br><button onclick="navigate('gandaki_krishi_quiz.html')" style="background:var(--sprout);color:#000;border:none;padding:10px 22px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">क्विज सुरु गर्नुस् ▶</button></div>`;
+      } else {
+        let totalQ = 0, totalC = 0, totalW = 0, bestMarks = 0;
+        history.forEach(h => { totalQ += h.total || 0; totalC += h.correct || 0; totalW += h.wrong || 0; if ((h.marks || 0) > bestMarks) bestMarks = h.marks; });
+        const accuracy = totalQ > 0 ? Math.round(totalC / totalQ * 100) : 0;
 
-    let rows = `
+        let rows = `
       <div class="report-row"><span class="rl">कुल परीक्षाहरू</span><span class="rv">${history.length}</span></div>
       <div class="report-row"><span class="rl">कुल प्रश्नहरू प्रयास</span><span class="rv">${totalQ}</span></div>
       <div class="report-row"><span class="rl">✅ कुल सही</span><span class="rv" style="color:var(--neon)">${totalC}</span></div>
@@ -838,53 +1146,103 @@ function openReport() {
       <div class="report-row"><span class="rl">🔥 Streak</span><span class="rv">${streak} दिन</span></div>
       <div style="margin-top:16px;font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;">परीक्षा इतिहास</div>`;
 
-    const recent = [...history].reverse().slice(0, 10);
-    recent.forEach((h, i) => {
-      rows += `<div class="report-row">
+        const recent = [...history].reverse().slice(0, 10);
+        recent.forEach((h, i) => {
+          rows += `<div class="report-row">
         <span class="rl">#${history.length - i} — ${h.date}<br><small>${h.name || 'Quiz'}</small></span>
         <span class="rv">${h.marks} अंक (${h.correct}/${h.total})</span>
       </div>`;
-    });
+        });
 
-    rows += `<br><button onclick="clearHistory()" style="width:100%;background:rgba(255,82,82,0.15);border:1px solid rgba(255,82,82,0.3);color:#ff5252;padding:12px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;">🗑 सबै डाटा मेटाउनुस्</button>`;
-    content.innerHTML = rows;
-  }
+        rows += `<br><button onclick="clearHistory()" style="width:100%;background:rgba(255,82,82,0.15);border:1px solid rgba(255,82,82,0.3);color:#ff5252;padding:12px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;">🗑 सबै डाटा मेटाउनुस्</button>`;
+        content.innerHTML = rows;
+      }
 
-  modal.classList.add('open');
-}
+      modal.classList.add('open');
+    }
 
-function closeReport(e) {
-  if (e.target === e.currentTarget) {
-    document.getElementById('reportModal').classList.remove('open');
-  }
-}
+    function closeReport(e) {
+      if (e.target === e.currentTarget) {
+        document.getElementById('reportModal').classList.remove('open');
+      }
+    }
 
-function clearHistory() {
-  if (confirm('के तपाईं साँच्चिकै सबै डाटा मेटाउन चाहनुहुन्छ?')) {
-    localStorage.removeItem(LS.HISTORY);
-    localStorage.removeItem(LS.STREAK);
-    localStorage.removeItem(LS.LAST);
-    document.getElementById('reportModal').classList.remove('open');
-    loadStats();
-    updateStreak();
-    alert('✅ सबै डाटा मेटाइयो।');
-  }
-}
+    function clearHistory() {
+      if (confirm('के तपाईं साँच्चिकै सबै डाटा मेटाउन चाहनुहुन्छ?')) {
+        localStorage.removeItem(LS.HISTORY);
+        localStorage.removeItem(LS.STREAK);
+        localStorage.removeItem(LS.LAST);
+        document.getElementById('reportModal').classList.remove('open');
+        loadStats();
+        updateStreak();
+        alert('✅ सबै डाटा मेटाइयो।');
+      }
+    }
 
-/* ─── DEMO DATA INJECTION (for first-time users to see UI) ─── */
-// Uncomment below to add demo data for testing:
-/*
-if (!localStorage.getItem(LS.HISTORY)) {
-  const demo = [
-    { name:'Quiz Session', date:'Mon Feb 24 2026', type:'quiz', total:50, correct:38, wrong:8, marks:36.4 },
-    { name:'Quiz Session', date:'Sun Feb 23 2026', type:'quiz', total:50, correct:31, wrong:12, marks:28.6 },
-    { name:'Written Practice', date:'Sat Feb 22 2026', type:'written', total:20, correct:15, wrong:4, marks:14.2 },
-  ];
-  localStorage.setItem(LS.HISTORY, JSON.stringify(demo));
-  loadStats();
-}
-*/
-</script>
+    /* ─── DEMO DATA INJECTION (for first-time users to see UI) ─── */
+    // Uncomment below to add demo data for testing:
+    /*
+    if (!localStorage.getItem(LS.HISTORY)) {
+      const demo = [
+        { name:'Quiz Session', date:'Mon Feb 24 2026', type:'quiz', total:50, correct:38, wrong:8, marks:36.4 },
+        { name:'Quiz Session', date:'Sun Feb 23 2026', type:'quiz', total:50, correct:31, wrong:12, marks:28.6 },
+        { name:'Written Practice', date:'Sat Feb 22 2026', type:'written', total:20, correct:15, wrong:4, marks:14.2 },
+      ];
+      localStorage.setItem(LS.HISTORY, JSON.stringify(demo));
+      loadStats();
+    }
+    */
+
+    function sendWhatsAppReport() {
+
+      const history = JSON.parse(localStorage.getItem(LS.HISTORY) || '[]');
+      const today = new Date().toDateString();
+      const todayData = JSON.parse(localStorage.getItem(LS.TODAY + today) || '{"q":0,"c":0,"w":0}');
+      const streak = parseInt(localStorage.getItem(LS.STREAK) || '0');
+
+      // Calculate totals
+      let totalQ = 0, totalC = 0, totalW = 0, bestMarks = 0;
+
+      history.forEach(h => {
+        totalQ += h.total || 0;
+        totalC += h.correct || 0;
+        totalW += h.wrong || 0;
+        if ((h.marks || 0) > bestMarks) bestMarks = h.marks;
+      });
+
+      const accuracy = totalQ > 0 ? ((totalC / totalQ) * 100).toFixed(1) : 0;
+
+      // Structured Message
+      let message = `
+🌾 गण्डकी कृषि लोकसेवा तयारी रिपोर्ट
+
+📅 Date: ${today}
+
+🔥 Streak: ${streak} दिन
+
+📊 आजको प्रगति:
+- Attempted: ${todayData.q}
+- Correct: ${todayData.c}
+- Wrong: ${todayData.w}
+
+📈 कुल तथ्यांक:
+- कुल परीक्षाहरू: ${history.length}
+- कुल प्रश्न प्रयास: ${totalQ}
+- कुल सही: ${totalC}
+- कुल गलत: ${totalW}
+- Accuracy: ${accuracy}%
+- Best Score: ${bestMarks}
+
+🎯 मेहनत जारी छ!
+`;
+
+      const phoneNumber = "9779763485833";
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank');
+    }
+  </script>
 
 </body>
+
 </html>
