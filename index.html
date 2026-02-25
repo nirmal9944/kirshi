@@ -823,6 +823,135 @@
         transform: translateY(4px);
       }
     }
+
+    /* ─── MOTIVATE BUTTON ─── */
+    .motivate {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      padding: 10px 22px;
+      border-radius: 30px;
+
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      color: #000;
+      background: linear-gradient(135deg, var(--sprout), var(--neon));
+      border: 1px solid rgba(170, 255, 68, 0.4);
+
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(.2, .8, .3, 1);
+      box-shadow: 0 0 20px rgba(170, 255, 68, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hover Effect */
+    .motivate:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 30px rgba(170, 255, 68, 0.5);
+    }
+
+    /* Click Effect */
+    .motivate:active {
+      transform: scale(0.95);
+    }
+
+    /* Glow Pulse Animation */
+    .motivate::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(170, 255, 68, 0.4), transparent 70%);
+      animation: motivateGlow 2.5s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes motivateGlow {
+      0% {
+        opacity: 0.4;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* ─── MOTIVATION MODAL ─── */
+
+    .motivation-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    .motivation-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .motivation-modal {
+      width: 95%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: #1a0f00;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .motivation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--neon);
+    }
+
+    .speaker-btn,
+    .close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-left: 6px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .speaker-btn:hover {
+      background: rgba(170, 255, 68, 0.3);
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 82, 82, 0.3);
+    }
+
+    .motivation-content {
+      font-size: 13px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: pre-line;
+    }
   </style>
 </head>
 
@@ -848,12 +977,28 @@
 
     <!-- HERO -->
     <div class="hero">
-      <div class="hero-greeting" id="greeting">नमस्कार 🙏  ASHMITA </div>
+      <div class="hero-greeting" id="greeting">नमस्कार 🙏</div>
       <h1 class="hero-title">
         <em>४थो तह कृषि</em> को<br>तयारी गरौँ!
       </h1>
       <p class="hero-sub">गण्डकी प्रदेश लोकसेवा आयोग • परीक्षा तयारी प्लेटफर्म</p>
+      <div class="motivate" onclick="openMotivation()">
+        🌟 Motivate Me
+      </div>
     </div>
+
+    <div class="motivation-overlay" id="motivationBox">
+        <div class="motivation-modal">
+          <div class="motivation-header">
+            <span>🌾 लोकसेवा प्रेरणा</span>
+            <div>
+              <button onclick="speakMotivation()" class="speaker-btn">🔊</button>
+              <button onclick="closeMotivation()" class="close-btn">✖</button>
+            </div>
+          </div>
+          <div class="motivation-content" id="motivationContent"></div>
+        </div>
+      </div>
 
     <!-- TODAY'S GOAL CARD -->
     <div class="goal-card">
@@ -961,7 +1106,7 @@
     <!-- MOTIVATIONAL QUOTE -->
     <div class="section-title">प्रेरणादायी उद्धरण</div>
     <div class="quote-card">
-      <div class="quote-text" id="quoteText">मेहनत नगरी सफलता | I love you budi तिमी छिटै लोकसेवा नाम निस्केको सुन्न पाऊ । सधैं तिम्रो लागि good luck बुढी 💛।</div>
+      <div class="quote-text" id="quoteText">मेहनत नगरी सफलता पाइँदैन। हरेक दिनको अभ्यासले लक्ष्यमा पुर्‍याउँछ।</div>
       <div class="quote-author">— गण्डकी कृषि लोकसेवा तयारी</div>
     </div>
     <div class="scroll-hint">↓ तल स्क्रोल गर्नुस्</div>
@@ -1024,9 +1169,9 @@
     /* ─── GREETING ─── */
     const hr = new Date().getHours();
     document.getElementById('greeting').textContent =
-      hr < 12 ? '🌅 शुभप्रभात! ASHMITA' :
-        hr < 17 ? '☀️ नमस्कार! ASHMITA' :
-          hr < 21 ? '🌆 शुभसन्ध्या! ASHMITA '  : '🌙 शुभरात्रि! ASHMITA';
+      hr < 12 ? '🌅 शुभप्रभात! Asmita' :
+        hr < 17 ? '☀️ नमस्कार! Asmita' :
+          hr < 21 ? '🌆 शुभसन्ध्या! asmita' : '🌙 शुभरात्रि! asmita';
 
     /* ─── QUOTES ─── */
     const quotes = [
@@ -1045,6 +1190,57 @@
       LAST: 'krishi_last_date',
       TODAY: 'krishi_today',
     };
+    let motivationText = "";
+
+    function openMotivation() {
+
+      motivationText = `
+
+
+success comes from consistency, and you have that power inside you. लोकसेवा तयारीमा patience र discipline चाहिन्छ, and you already have both. जब तिमी 5–6 घण्टा dedicated भएर पढ्छौ, I see a future officer in you. तिमी  थाक्दा  पनि  remember — I’m always beside you, cheering for you. You’re not just studying for an exam, you’re building your future. And I believe in you more than anyone 💖
+
+📚 पढ्ने तरिका:
+- Pomodoro Technique प्रयोग गर्नुहोस् (२५ मिनेट अध्ययन + ५ मिनेट विश्राम)।
+- Active Recall र Spaced Repetition अपनाउनुहोस्।
+- पढ्दा नोट बनाउनुस् र आफ्नै शब्दमा सारांश लेख्नुस्।
+
+✍️ लेख्ने तरिका:
+- प्रत्येक दिन कम्तीमा १ घण्टा लेखन अभ्यास।
+- अघिल्ला वर्षका प्रश्नहरू लेखेर अभ्यास गर्नुहोस्।
+- परिचय, मुख्य भाग र निष्कर्ष स्पष्ट बनाउनुहोस्।
+
+🎯 प्रश्न हल गर्ने तरिका:
+- पहिले सजिला प्रश्न हल गर्नुहोस्।
+- समय व्यवस्थापन गर्न ५० प्रश्न = ५० मिनेट रणनीति अपनाउनुहोस्।
+- नकारात्मक अंक भएकाले अनुमान कम गर्नुहोस्।
+
+⏰ दैनिक तालिका:
+बिहान २ घण्टा पढाइ  
+दिउँसो २ घण्टा MCQ अभ्यास  
+साँझ १ घण्टा लेखन अभ्यास  
+
+🔥 निरन्तर अभ्यास नै सफलता हो।
+आजको सानो प्रगति नै भोलिको ठूलो सफलता हो।
+तपाईं अवश्य सफल हुनुहुन्छ।
+`;
+
+      document.getElementById("motivationContent").textContent = motivationText;
+      document.getElementById("motivationBox").classList.add("open");
+    }
+
+    function closeMotivation() {
+      document.getElementById("motivationBox").classList.remove("open");
+      speechSynthesis.cancel();
+    }
+
+    function speakMotivation() {
+      speechSynthesis.cancel();
+      const speech = new SpeechSynthesisUtterance(motivationText);
+      speech.lang = "ne-NP";
+      speech.rate = 0.9;
+      speech.pitch = 1;
+      window.speechSynthesis.speak(speech);
+    }
 
     /* ─── STREAK LOGIC ─── */
     function updateStreak() {
@@ -1066,6 +1262,7 @@
       document.getElementById('streakPill').textContent = `🔥 ${streak} Day${streak !== 1 ? 's' : ''}`;
     }
     updateStreak();
+
 
     /* ─── LOAD STATS FROM LOCALSTORAGE ─── */
     function loadStats() {
@@ -1246,6 +1443,3 @@
 </body>
 
 </html>
-
-
-
