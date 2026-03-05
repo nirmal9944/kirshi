@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gandaki Krishi Lok Sewa Quiz 2082</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --soil:#0d1a00; --earth:#1a2800; --moss:#2d5a1b; --leaf:#4a8c2a;
+  --sprout:#7ac142; --neon:#aaff44; --gold:#f5c842; --amber:#ff9800;
+  --text:#e8f5e0; --muted:rgba(232,245,224,0.45);
+  --card:rgba(255,255,255,0.055); --border:rgba(170,255,68,0.15);
+  --correct:#00e676; --wrong:#ff1744; --skip:#ffab00;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--soil); color:var(--text);
+  min-height:100vh; display:flex; justify-content:center;
+  align-items:flex-start; overflow-x:hidden;
+}
+body::before{
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 85%,rgba(45,90,27,.4) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 15%,rgba(74,140,42,.2) 0%,transparent 55%),
+    radial-gradient(ellipse 100% 70% at 50% 50%,rgba(13,26,0,.7) 0%,transparent 80%);
+  animation:bgS 10s ease-in-out infinite alternate;
+}
+@keyframes bgS{0%{opacity:.8}100%{opacity:1}}
+.particle{position:fixed;pointer-events:none;animation:rise linear infinite;opacity:0;}
+@keyframes rise{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0;}
+  8%{opacity:.15;} 92%{opacity:.15;}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0;}
+}
+.app{position:relative;z-index:1;width:100%;max-width:500px;margin:0 auto;padding:0 16px 80px;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;border-bottom:1px solid var(--border);margin-bottom:4px;}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;text-decoration:none;color:var(--text);transition:all .2s;}
+.back-btn:hover{background:rgba(170,255,68,.1);}
+.topbar-title{font-size:13px;font-weight:700;color:var(--neon);}
+.topbar-title span{display:block;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:1px;}
+.timer-chip{background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);color:var(--gold);font-size:13px;font-weight:800;padding:6px 12px;border-radius:20px;font-variant-numeric:tabular-nums;transition:all .3s;}
+.timer-chip.danger{background:rgba(255,23,68,.2);border-color:rgba(255,23,68,.4);color:#ff5252;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* PROGRESS */
+.prog-wrap{padding:10px 0;}
+.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;}
+.prog-bar{height:5px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--leaf),var(--neon));border-radius:6px;box-shadow:0 0 10px rgba(170,255,68,.4);transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0 14px;}
+.stat-chip{text-align:center;padding:8px 4px;border-radius:12px;font-size:11px;font-weight:600;}
+.stat-chip .sn{font-size:18px;font-weight:800;display:block;line-height:1;margin-bottom:2px;}
+.stat-chip.c{background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.25);color:var(--correct);}
+.stat-chip.w{background:rgba(255,23,68,.12);border:1px solid rgba(255,23,68,.25);color:var(--wrong);}
+.stat-chip.s{background:rgba(255,171,0,.12);border:1px solid rgba(255,171,0,.25);color:var(--skip);}
+
+/* UNIT BADGE */
+.unit-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--neon);margin-bottom:10px;}
+
+/* QUESTION CARD */
+.q-card{background:linear-gradient(145deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.03) 100%);border:1px solid rgba(170,255,68,.18);border-radius:22px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;}
+.q-num{position:absolute;right:14px;top:8px;font-size:64px;font-weight:800;color:rgba(170,255,68,.05);line-height:1;font-family:'Plus Jakarta Sans',sans-serif;}
+.q-text{font-family:'Tiro Devanagari Hindi',serif;font-size:15.5px;line-height:1.75;color:#fff;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:9px;}
+.option{position:relative;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 14px 13px 48px;cursor:pointer;font-family:'Tiro Devanagari Hindi',serif;font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);transition:all .2s;user-select:none;}
+.option::before{content:attr(data-l);position:absolute;left:13px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:rgba(255,255,255,.09);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;color:var(--neon);}
+.option:hover:not(.locked){background:rgba(170,255,68,.1);border-color:rgba(170,255,68,.35);transform:translateX(5px);}
+.option:active:not(.locked){transform:scale(.98);}
+.option.correct{background:rgba(0,230,118,.18);border-color:var(--correct);animation:popIn .35s ease;}
+.option.correct::before{background:var(--correct);color:#000;content:'✓';}
+.option.wrong{background:rgba(255,23,68,.15);border-color:var(--wrong);}
+.option.wrong::before{background:var(--wrong);color:#fff;content:'✗';}
+@keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.025)}100%{transform:scale(1)}}
+
+/* EXPLAIN */
+.explain{margin-top:12px;background:rgba(245,200,66,.07);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:11px 14px;font-size:12.5px;line-height:1.65;color:rgba(255,255,255,.72);font-family:'Tiro Devanagari Hindi',serif;display:none;animation:fadeUp .3s ease;}
+.explain.show{display:block;}
+.explain strong{color:var(--gold);}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;margin-top:14px;}
+.btn{flex:1;padding:13px 10px;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.btn-next{background:linear-gradient(135deg,#2a6e1a,var(--sprout));color:#000;box-shadow:0 4px 18px rgba(122,193,66,.35);}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(122,193,66,.5);}
+.btn-skip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.55);}
+.btn-skip:hover{background:rgba(255,171,0,.12);border-color:var(--skip);color:var(--skip);}
+.btn-next.hidden{display:none;}
+
+/* START SCREEN */
+.start-screen{padding:10px 0;animation:fadeUp .6s ease;}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),#e65100);color:#000;font-size:10px;font-weight:800;letter-spacing:2px;padding:4px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:14px;}
+.hero-title{font-family:'Tiro Devanagari Hindi',serif;font-size:26px;line-height:1.4;color:#fff;margin-bottom:6px;}
+.hero-title em{font-style:normal;color:var(--neon);text-shadow:0 0 22px rgba(170,255,68,.4);}
+.hero-sub{font-size:12px;color:var(--muted);margin-bottom:22px;line-height:1.7;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.info-tile{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 12px;font-size:12px;color:var(--muted);text-align:center;}
+.info-tile .iv{font-size:22px;font-weight:800;color:var(--neon);display:block;margin-bottom:3px;}
+.unit-list{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:18px;}
+.unit-list h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.unit-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12.5px;}
+.unit-row:last-child{border-bottom:none;}
+.unit-row .un{color:rgba(255,255,255,.8);}
+.unit-row .uq{color:var(--neon);font-weight:700;}
+.rules{background:rgba(245,200,66,.06);border:1px solid rgba(245,200,66,.15);border-radius:14px;padding:14px;font-size:12.5px;color:var(--muted);line-height:2.1;margin-bottom:20px;list-style:none;}
+.rules li::before{content:'🌿 ';}
+.btn-start{width:100%;padding:16px;background:linear-gradient(135deg,#1f5c0e,var(--sprout));color:#000;font-size:16px;font-weight:800;border:none;border-radius:16px;cursor:pointer;letter-spacing:.5px;box-shadow:0 6px 28px rgba(122,193,66,.5);transition:all .25s;}
+.btn-start:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(122,193,66,.6);}
+
+/* RESULT SCREEN */
+.result-screen{text-align:center;padding:10px 0;animation:fadeUp .6s ease;}
+.result-header{margin-bottom:6px;}
+.result-header h2{font-family:'Tiro Devanagari Hindi',serif;font-size:22px;color:#fff;}
+.result-header p{font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:4px;}
+.donut-wrap{position:relative;width:150px;height:150px;margin:18px auto 20px;}
+.donut-wrap svg{transform:rotate(-90deg);}
+.donut-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:12;}
+.donut-fg{fill:none;stroke:url(#dgrad);stroke-width:12;stroke-linecap:round;transition:stroke-dasharray 1.5s cubic-bezier(.4,0,.2,1);}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.donut-pct{font-size:26px;font-weight:800;color:var(--neon);line-height:1;}
+.donut-label{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.marks-display{font-size:20px;font-weight:800;margin:6px 0 16px;background:linear-gradient(135deg,var(--neon),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.res-tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 10px;font-size:11px;color:var(--muted);}
+.res-tile .rv{font-size:20px;font-weight:800;display:block;margin-bottom:3px;}
+.remark-box{background:rgba(170,255,68,.07);border:1px solid rgba(170,255,68,.18);border-radius:14px;padding:14px;font-family:'Tiro Devanagari Hindi',serif;font-size:14px;color:rgba(255,255,255,.85);line-height:1.8;margin-bottom:14px;}
+.cat-section{text-align:left;margin-bottom:16px;}
+.cat-section h4{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.cat-row{margin-bottom:9px;}
+.cat-row-top{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px;}
+.cat-row-top .cn{color:rgba(255,255,255,.7);}
+.cat-row-top .cq{color:var(--neon);font-weight:700;}
+.cat-mini-bar{height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;}
+.cat-mini-fill{height:100%;background:linear-gradient(90deg,var(--leaf),var(--neon));border-radius:4px;}
+.btn-row-result{display:flex;gap:10px;margin-top:4px;}
+.btn-retry{flex:1;padding:14px;background:linear-gradient(135deg,#1a4a08,#3d8c1a);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:14px;cursor:pointer;box-shadow:0 4px 18px rgba(61,140,26,.4);transition:all .2s;}
+.btn-retry:hover{transform:translateY(-2px);}
+.btn-home{flex:1;padding:14px;background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--text);font-size:14px;font-weight:700;border-radius:14px;cursor:pointer;transition:all .2s;}
+.btn-home:hover{background:rgba(255,255,255,.12);}
+.hidden{display:none!important;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);background:rgba(10,26,0,.96);border:1px solid var(--neon);color:#fff;padding:9px 22px;border-radius:30px;font-size:13px;font-weight:600;transition:transform .35s cubic-bezier(.2,.8,.3,1);z-index:999;backdrop-filter:blur(10px);white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="pl"></div><!-- particles -->
+
+<div class="app">
+
+<!-- ══════════ START SCREEN ══════════ -->
+<div id="startScreen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="gandaki_krishi_quiz.html" class="back-btn">←</a>
+      <div class="topbar-title">🌾 कृषि लोकसेवा<span>Gandaki Province • 4th Level</span></div>
+    </div>
+  </div>
+  <div class="start-screen">
+    <div class="hero-badge">📋 पाठ्यक्रम आधारित • 2082 B.S.</div>
+    <h1 class="hero-title">गण्डकी प्रदेश<br><em>कृषि MCQ परीक्षा</em></h1>
+    <p class="hero-sub">७ एकाइ समेटिएको ५० प्रश्नको पूर्ण पाठ्यक्रम परीक्षा।<br>नकारात्मक अंक लागू • ४५ मिनेट समयावधि।</p>
+    <div class="info-grid">
+      <div class="info-tile"><span class="iv">50</span>MCQ प्रश्न</div>
+      <div class="info-tile"><span class="iv">50</span>कुल अंक</div>
+      <div class="info-tile"><span class="iv">-0.2</span>नकारात्मक</div>
+      <div class="info-tile"><span class="iv">45</span>मिनेट</div>
+    </div>
+    <div class="unit-list">
+      <h4>एकाइगत प्रश्न विभाजन</h4>
+      <div class="unit-row"><span class="un">🏛 एकाइ १: नीति तथा कानुनी व्यवस्था</span><span class="uq">8 Q</span></div>
+      <div class="unit-row"><span class="un">🌳 एकाइ २: बागवानी</span><span class="uq">7 Q</span></div>
+      <div class="unit-row"><span class="un">📡 एकाइ ३: कृषि प्रसार</span><span class="uq">7 Q</span></div>
+      <div class="unit-row"><span class="un">🌾 एकाइ ४: बाली विज्ञान</span><span class="uq">7 Q</span></div>
+      <div class="unit-row"><span class="un">🛡 एकाइ ५: बाली संरक्षण</span><span class="uq">7 Q</span></div>
+      <div class="unit-row"><span class="un">💰 एकाइ ६: कृषि अर्थशास्त्र</span><span class="uq">7 Q</span></div>
+      <div class="unit-row"><span class="un">🌱 एकाइ ७: माटो व्यवस्थापन</span><span class="uq">7 Q</span></div>
+    </div>
+    <ul class="rules">
+      <li>प्रत्येक सही उत्तरमा <strong>+१</strong> अंक</li>
+      <li>गलत उत्तरमा <strong>-०.२०</strong> अंक काटिन्छ</li>
+      <li>Skip गर्दा कुनै अंक काटिँदैन</li>
+      <li>उत्तर दिएपछि व्याख्या देखिनेछ</li>
+      <li>४५ मिनेट सकिएपछि स्वतः परिणाम देखिन्छ</li>
+    </ul>
+    <button class="btn-start" onclick="startQuiz()">▶ &nbsp; परीक्षा सुरु गर्नुहोस्</button>
+  </div>
+</div>
+
+<!-- ══════════ QUIZ SCREEN ══════════ -->
+<div id="quizScreen" class="hidden">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title">🌾 कृषि MCQ<span>Gandaki • 4th Level</span></div>
+    </div>
+    <div class="timer-chip" id="timerChip">⏱ 45:00</div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span id="progLabel">Question 1 / 50</span><span id="progPct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:2%"></div></div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-chip c"><span class="sn" id="sc">0</span>✔ सही</div>
+    <div class="stat-chip w"><span class="sn" id="sw">0</span>✘ गलत</div>
+    <div class="stat-chip s"><span class="sn" id="ss">0</span>⏭ Skip</div>
+  </div>
+  <div class="unit-badge" id="unitBadge">एकाइ १</div>
+  <div class="q-card">
+    <div class="q-num" id="qNum">1</div>
+    <div class="q-text" id="qText"></div>
+  </div>
+  <div class="explain hidden" id="explainBox"></div>
+  <div class="options" id="optionsWrap"></div>
+  <div class="btn-row">
+    <button class="btn btn-skip" onclick="skipQ()">⏭ Skip</button>
+    <button class="btn btn-next hidden" id="nextBtn" onclick="nextQ()">अर्को ▶</button>
+  </div>
+</div>
+
+<!-- ══════════ RESULT SCREEN ══════════ -->
+<div id="resultScreen" class="hidden">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title">📊 परीक्षा परिणाम<span>Gandaki Krishi 4th Level 2082</span></div>
+    </div>
+  </div>
+  <div class="result-screen">
+    <div class="result-header">
+      <h2>परीक्षा सम्पन्न! 🎉</h2>
+      <p>गण्डकी प्रदेश कृषि लोकसेवा तयारी</p>
+    </div>
+    <div class="donut-wrap">
+      <svg viewBox="0 0 150 150" width="150" height="150">
+        <defs>
+          <linearGradient id="dgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#4a8c2a"/>
+            <stop offset="100%" style="stop-color:#aaff44"/>
+          </linearGradient>
+        </defs>
+        <circle class="donut-bg" cx="75" cy="75" r="60"/>
+        <circle class="donut-fg" id="donutFg" cx="75" cy="75" r="60" stroke-dasharray="0 377"/>
+      </svg>
+      <div class="donut-center">
+        <div class="donut-pct" id="donutPct">0%</div>
+        <div class="donut-label">SCORE</div>
+      </div>
+    </div>
+    <div class="marks-display" id="marksDisplay"></div>
+    <div class="res-grid">
+      <div class="res-tile"><span class="rv" id="rC" style="color:var(--correct)">0</span>✔ सही</div>
+      <div class="res-tile"><span class="rv" id="rW" style="color:var(--wrong)">0</span>✘ गलत</div>
+      <div class="res-tile"><span class="rv" id="rS" style="color:var(--skip)">0</span>⏭ Skip</div>
+      <div class="res-tile"><span class="rv" id="rN" style="color:var(--wrong)">0</span>➖ Negative</div>
+    </div>
+    <div class="remark-box" id="remarkBox"></div>
+    <div class="cat-section"><h4>एकाइगत विश्लेषण</h4><div id="catBreakdown"></div></div>
+    <div class="btn-row-result">
+      <button class="btn-home" onclick="location.href='index.html'">🏠 Home</button>
+      <button class="btn-retry" onclick="location.reload()">🔁 फेरि प्रयास</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* PARTICLES */
+(function(){
+  const pi=document.getElementById('pl');
+  const em=['🌾','🌱','🍃','🌿','🪴','🌻','🌽','🥦'];
+  for(let i=0;i<14;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.textContent=em[i%em.length];
+    p.style.cssText=`left:${Math.random()*100}%;font-size:${10+Math.random()*12}px;animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*14}s`;
+    pi.appendChild(p);
+  }
+})();
+
+/* AUDIO */
+const AC=new(window.AudioContext||window.webkitAudioContext)();
+function beep(t){
+  const o=AC.createOscillator(),g=AC.createGain();
+  o.connect(g);g.connect(AC.destination);
+  o.frequency.value={correct:900,wrong:220,skip:500}[t]||500;
+  g.gain.value=.22; o.start(); o.stop(AC.currentTime+.28);
+}
+
+/* ════════════════════════════════════════
+   50 QUESTIONS — FULL SYLLABUS
+════════════════════════════════════════ */
+const Q = [
+
+/* ── UNIT 1: नीति तथा कानुनी व्यवस्था ── */
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'नेपालको संविधानको कुन धाराको उपधारा (३) मा "प्रत्येक नागरिकलाई खाद्य सम्प्रभुताको हक हुनेछ" भनिएको छ?',
+o:['धारा ३०','धारा ३५','धारा ३६','धारा ४०'],a:2,
+e:'नेपालको संविधानको धारा ३६ (३) मा खाद्य सम्प्रभुताको हक उल्लेख गरिएको छ।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'कृषि विकास रणनीति (ADS) ले १० वर्षमा कृषि व्यापार सन्तुलनमा कस्तो लक्ष्य राखेको छ?',
+o:['व्यापार घाटा ५०% घटाउने','व्यापार सन्तुलन (Trade Neutral)','व्यापार बचत','आयात प्रतिस्थापन'],a:1,
+e:'ADS अनुसार १० वर्षभित्र कृषि व्यापार सन्तुलन Trade Neutral बनाउने लक्ष्य छ।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'प्रधानमन्त्री कृषि आधुनिकीकरण परियोजना अन्तर्गत जोनको न्यूनतम क्षेत्रफल कति हो?',
+o:['१०० हेक्टर','५०० हेक्टर','१००० हेक्टर','२००० हेक्टर'],a:2,
+e:'PMAMP अनुसार जोन विकासका लागि न्यूनतम १००० हेक्टर क्षेत्र आवश्यक हुन्छ।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'निजामती कर्मचारीले एक वर्षमा कति दिन बिरामी बिदा पाउने व्यवस्था छ?',
+o:['६ दिन','१२ दिन','१५ दिन','३० दिन'],a:2,
+e:'निजामती सेवा नियमावली अनुसार कर्मचारीले वर्षमा १५ दिन बिरामी बिदा पाउँछन्।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'बीउ बिजन प्रमाणीकरणमा प्रजनक बीउ उत्पादन कसले गर्छ?',
+o:['बीउ बिजन केन्द्र','सम्बन्धित प्रजनक','कृषि प्रसार अधिकृत','कृषक समूह'],a:1,
+e:'प्रजनक बीउ (Breeder Seed) सम्बन्धित प्रजनक वैज्ञानिकले उत्पादन गर्छन्।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'विषादी व्यवस्थापन ऐन २०७६ अनुसार नेपालमा हाल कति प्रकारका विषादी प्रतिबन्धित छन्?',
+o:['२०','२४','२६','२८'],a:1,
+e:'नेपालमा हाल २४ प्रकारका विषादी प्रतिबन्धित गरिएको छ।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'सोह्रौँ योजनाको मुख्य लक्ष्य के हो?',
+o:['रासायनिक मल अनुदान बढाउने','कृषिमा आत्मनिर्भरता र व्यवसायिकरण','जग्गा चक्लाबन्दी मात्र','परम्परागत खेती'],a:1,
+e:'सोह्रौँ योजनाले कृषि आत्मनिर्भरता र व्यवसायिकरणलाई प्राथमिकता दिएको छ।'},
+
+{u:'एकाइ १: नीति तथा कानुनी व्यवस्था',
+q:'कृषि सूचना तथा प्रशिक्षण केन्द्र (AITC) को मुख्य कार्य के हो?',
+o:['बीउ वितरण','कृषि सञ्चार र तालिम','बीमा भुक्तानी','सिँचाइ निर्माण'],a:1,
+e:'AITC को मुख्य कार्य कृषि सूचना, सञ्चार र तालिम प्रदान गर्नु हो।'},
+
+/* ── UNIT 2: बागवानी ── */
+
+{u:'एकाइ २: बागवानी',
+q:'कफीको Parchment A गुणस्तरको न्यूनतम मूल्य (२०८१) कति तोकिएको छ?',
+o:['रू ४५०','रू ५००','रू ५३५','रू ६००'],a:2,
+e:'२०८१ का लागि Parchment A कफीको न्यूनतम मूल्य रु ५३५ तोकिएको छ।'},
+
+{u:'एकाइ २: बागवानी',
+q:'मुस्ताङ जिल्ला कुन फलफूलको HDP खेतीका लागि प्रसिद्ध छ?',
+o:['सुन्तला','स्याउ','ओखर','केरा'],a:1,
+e:'मुस्ताङ जिल्ला स्याउको उच्च घनत्व खेतीका लागि प्रसिद्ध छ।'},
+
+{u:'एकाइ २: बागवानी',
+q:'साइन र रुटस्टक प्रयोग हुने प्रसारण विधि कुन हो?',
+o:['कटिङ','कलमी','लेयरिङ','बीउ'],a:1,
+e:'Grafting/Budding मा Scion र Rootstock प्रयोग गरिन्छ।'},
+
+{u:'एकाइ २: बागवानी',
+q:'जनकदेव कुन बालीको जात हो?',
+o:['धान','गहुँ','आलु','मकै'],a:2,
+e:'जनकदेव आलुको उन्नत जात हो।'},
+
+{u:'एकाइ २: बागवानी',
+q:'प्लास्टिक टनेलको उपयुक्त उचाइ कति हुन्छ?',
+o:['१ मिटर','२.५ मिटर','५ मिटर','१० मिटर'],a:1,
+e:'सामान्यतया प्लास्टिक टनेलको उचाइ करिब २.५ मिटर हुन्छ।'},
+
+{u:'एकाइ २: बागवानी',
+q:'चिया खेतीका लागि माटोको pH कति उपयुक्त हुन्छ?',
+o:['४.०–५.०','४.५–५.५','६.५–७.५','७.५–८.५'],a:1,
+e:'चिया खेतीका लागि अम्लीय माटो pH 4.5–5.5 राम्रो हुन्छ।'},
+
+{u:'एकाइ २: बागवानी',
+q:'ड्रागन फ्रुट फूल फुलेपछि कति दिनमा फल तयार हुन्छ?',
+o:['१५–२० दिन','३०–५० दिन','६०–८० दिन','१००–१२० दिन'],a:1,
+e:'फूल फुलेपछि लगभग ३०–५० दिनमा ड्रागन फ्रुट तयार हुन्छ।'},
+
+/* ── UNIT 3: कृषि प्रसार ── */
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'तालिमले मुख्यतया कुन क्षेत्रमा परिवर्तन ल्याउँछ?',
+o:['ज्ञान मात्र','सीप मात्र','ज्ञान, सीप र धारणा','संरचना'],a:2,
+e:'तालिमले KASA (Knowledge, Attitude, Skill, Aspiration) मा परिवर्तन ल्याउँछ।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'कृषक समूहमा सामान्यतया कति सदस्य हुन्छन्?',
+o:['५–१०','१५–२०','२०–२५','५० भन्दा माथि'],a:1,
+e:'कृषक समूहमा प्रायः १५–२० सदस्य हुन्छन्।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'Learning by doing सिद्धान्त कुन विधिमा प्रयोग हुन्छ?',
+o:['नतिजा प्रदर्शन','तरिका प्रदर्शन','रेडियो','प्रदर्शनी'],a:1,
+e:'Method Demonstration मा गरेर सिक्ने सिद्धान्त प्रयोग हुन्छ।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'Early Majority कृषक कति प्रतिशत हुन्छन्?',
+o:['२.५%','१३.५%','३४%','१६%'],a:2,
+e:'Diffusion theory अनुसार Early Majority = ३४% हुन्छ।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'किसान कल सेन्टरको टोल फ्री नम्बर कति हो?',
+o:['१०२','११५५','११०८','१९७'],a:1,
+e:'नेपालमा किसान कल सेन्टरको नम्बर 1155 हो।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'व्यक्तिगत प्रसार विधि कुन हो?',
+o:['रेडियो','हाटबजार','फार्म भ्रमण','कार्यशाला'],a:2,
+e:'Farm and Home Visit व्यक्तिगत प्रसार विधि हो।'},
+
+{u:'एकाइ ३: कृषि प्रसार',
+q:'Motivation को मुख्य भूमिका के हो?',
+o:['अनुदान','नयाँ प्रविधि अपनाउन प्रेरणा','तथ्याङ्क','सरुवा'],a:1,
+e:'Motivation ले कृषकलाई नयाँ प्रविधि अपनाउन प्रेरित गर्छ।'},
+
+/* ── UNIT 4: बाली विज्ञान ── */
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'Breeder seed को ट्याग कस्तो रंगको हुन्छ?',
+o:['सेतो','सुनौलो पहेंलो','नीलो','हरियो'],a:1,
+e:'Breeder seed को ट्याग सुनौलो पहेंलो हुन्छ।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'गहुँको CRI अवस्था कहिले आउँछ?',
+o:['फूल फुल्दा','२०–२५ दिन','गाँज हाल्दा','दाना भरिँदा'],a:1,
+e:'गहुँमा CRI अवस्था बीउ रोपेको २०–२५ दिनमा आउँछ।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'कागुनो कुन प्रकारको बाली हो?',
+o:['दलहन','तेलहन','रैथाने खाद्यान्न','नगदे'],a:2,
+e:'कागुनो रैथाने खाद्यान्न बाली हो।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'धानको न्यूनतम अंकुरण प्रतिशत कति हुनुपर्छ?',
+o:['५०%','६०%','७०%','८०%'],a:3,
+e:'धानको बीउको न्यूनतम अंकुरण प्रतिशत ८०% हुनुपर्छ।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'Community Seed Bank को मुख्य फाइदा के हो?',
+o:['मल भण्डारण','स्थानीय बीउ संरक्षण','बीउ निर्यात','हाइब्रिड उत्पादन'],a:1,
+e:'यसले स्थानीय र रैथाने बीउ संरक्षण गर्छ।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'धान काट्दा उपयुक्त आर्द्रता कति हुन्छ?',
+o:['१०%','१४%','२०%','२५%'],a:1,
+e:'धान काट्दा करिब १४% आर्द्रता उपयुक्त हुन्छ।'},
+
+{u:'एकाइ ४: बाली विज्ञान',
+q:'African Tall मकै मुख्यतया केका लागि प्रयोग हुन्छ?',
+o:['दाना','घाँस','पपकोर्न','स्विटकोर्न'],a:1,
+e:'African Tall मकै घाँस उत्पादनका लागि प्रयोग हुन्छ।'},
+
+/* ── UNIT 5: बाली संरक्षण ── */
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'AESA को पूर्ण रूप के हो?',
+o:['Agro Economic Soil Analysis','Agro Eco System Analysis','Agriculture Extension Survey','All Essential Seed'],a:1,
+e:'IPM मा AESA = Agro Ecosystem Analysis हुन्छ।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'Malathion को प्रतीक्षा अवधि कति हो?',
+o:['३ दिन','७ दिन','१४ दिन','२१ दिन'],a:1,
+e:'Malathion प्रयोगपछि ७ दिन प्रतीक्षा अवधि हुन्छ।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'रानी मौरीको आयु कति हुन्छ?',
+o:['६ महिना','१ वर्ष','२–३ वर्ष','१० वर्ष'],a:2,
+e:'Queen bee को आयु लगभग २–३ वर्ष हुन्छ।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'Spawn भन्नाले के बुझिन्छ?',
+o:['छाता','बीउ','डाँठ','झोला'],a:1,
+e:'Spawn भनेको च्याउको बीउ हो।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'Fall Armyworm नियन्त्रणका लागि कुन जैविक विषादी प्रयोग हुन्छ?',
+o:['Zinc phosphide','Bt','Urea','DDT'],a:1,
+e:'Bacillus thuringiensis (Bt) जैविक विषादी प्रयोग हुन्छ।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'पहेंलो लेबलले के जनाउँछ?',
+o:['अत्यधिक विषालु','कडा विषालु','मध्यम विषालु','कम विषालु'],a:1,
+e:'पहेंलो लेबलले Highly toxic जनाउँछ।'},
+
+{u:'एकाइ ५: बाली संरक्षण',
+q:'Spawn भण्डारण तापक्रम कति हो?',
+o:['०°C','४–५°C','२५°C','४०°C'],a:1,
+e:'Spawn लाई ४–५°C मा भण्डारण गरिन्छ।'},
+
+/* ── UNIT 6: कृषि अर्थशास्त्र ── */
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'Fixed Cost मा के पर्दछ?',
+o:['बीउ','मल','जग्गा भाडा','ज्याला'],a:2,
+e:'जग्गाको भाडा र उपकरण ह्रास कट्टी Fixed Cost हो।'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'मूल्य घट्दा मागमा के हुन्छ?',
+o:['घट्छ','बढ्छ','स्थिर','शून्य'],a:1,
+e:'Law of demand अनुसार मूल्य घट्दा माग बढ्छ।'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'व्यावसायिक कृषि बजारका लागि कुन प्रणाली महत्त्वपूर्ण छ?',
+o:['कोटा','Value Chain','विनिमय','आयात'],a:1,
+e:'Value Chain प्रणालीलाई जोड दिइएको छ।'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'Primary data कसरी संकलन हुन्छ?',
+o:['पुस्तक','स्थलगत सर्वेक्षण','प्रतिवेदन','इन्टरनेट'],a:1,
+e:'Field survey र interview बाट primary data संकलन हुन्छ।'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'MSP कहिले घोषणा गरिन्छ?',
+o:['कटानी बेला','रोप्नु अघि','बेचिसकेपछि','बजेट दिन'],a:1,
+e:'MSP बाली लगाउनु अगावै घोषणा गरिन्छ।'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'Depreciation कसरी निकालिन्छ?',
+o:['मूल्य×समय','(खरिद-कबाडी)/वर्ष','नाफा+नोक्सान','आम्दानी-खर्च'],a:1,
+e:'Depreciation = (Purchase value – Scrap value)/Useful life.'},
+
+{u:'एकाइ ६: कृषि अर्थशास्त्र',
+q:'Self-reliance भन्नाले के बुझिन्छ?',
+o:['सबै निर्यात','आन्तरिक माग उत्पादनले धान्ने','अनुदान','आयात'],a:1,
+e:'आन्तरिक मागलाई आन्तरिक उत्पादनले धान्नु आत्मनिर्भरता हो।'},
+
+/* ── UNIT 7: माटो व्यवस्थापन ── */
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'माटो नमूना लिँदा कस्तो आकारको खाडल बनाइन्छ?',
+o:['O','L','V','Square'],a:2,
+e:'माटो नमूना V आकारको खाडलबाट लिइन्छ।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'नाइट्रोजन कमी हुँदा के लक्षण देखिन्छ?',
+o:['डाँठ रातो','तल्ला पात पहेंलो','जरा कुहिने','फल नलाग्ने'],a:1,
+e:'नाइट्रोजन कमी हुँदा पुराना पात पहेंलिन्छन्।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'अम्लीय माटो सुधार गर्न प्रति रोपनी कति चून प्रयोग हुन्छ?',
+o:['५ केजी','१०–१५ केजी','५०–६० केजी','१००+ केजी'],a:2,
+e:'अम्लीय माटो सुधारका लागि ५०–६० केजी चून सिफारिस गरिन्छ।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'युरियामा नाइट्रोजन कति प्रतिशत हुन्छ?',
+o:['१८%','२६%','४६%','६०%'],a:2,
+e:'युरिया मलमा ४६% नाइट्रोजन हुन्छ।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'माटो नमूना कति ठाउँबाट लिनुपर्छ?',
+o:['१','२','५–१०','२०'],a:2,
+e:'कम्तिमा ५–१० ठाउँबाट नमूना लिइन्छ।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'पोटासले बिरुवामा के काम गर्छ?',
+o:['हरियो बनाउने','रोग प्रतिरोध बढाउने','जरा बढाउने','बीउ रोकिने'],a:1,
+e:'Potash ले रोग प्रतिरोध क्षमता र गुणस्तर बढाउँछ।'},
+
+{u:'एकाइ ७: माटो व्यवस्थापन',
+q:'वर्षाले माटोको पातलो तह बगाउने प्रक्रियालाई के भनिन्छ?',
+o:['Splash erosion','Sheet erosion','Gully erosion','Rill erosion'],a:1,
+e:'Sheet erosion मा माटोको पातलो तह बग्छ।'}
+
+];
+
+
+/* ── STATE ── */
+let qi=0,correct=0,wrong=0,skipped=0,locked=false;
+let timerSec=45*60,timerInt;
+const catStats={};
+
+/* ── TIMER ── */
+function startTimer(){
+  timerInt=setInterval(()=>{
+    timerSec--;
+    const m=String(Math.floor(timerSec/60)).padStart(2,'0');
+    const s=String(timerSec%60).padStart(2,'0');
+    const chip=document.getElementById('timerChip');
+    chip.textContent=`⏱ ${m}:${s}`;
+    if(timerSec<=300) chip.classList.add('danger');
+    if(timerSec<=0){clearInterval(timerInt);showResult();}
+  },1000);
+}
+
+/* ── START ── */
+function startQuiz(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  startTimer(); loadQ();
+}
+
+/* ── LOAD Q ── */
+function loadQ(){
+  locked=false;
+  document.getElementById('nextBtn').classList.add('hidden');
+  const eb=document.getElementById('explainBox');
+  eb.classList.remove('show'); eb.classList.add('hidden');
+  const q=Q[qi];
+  document.getElementById('progLabel').textContent=`Question ${qi+1} / ${Q.length}`;
+  document.getElementById('progPct').textContent=Math.round(qi/Q.length*100)+'%';
+  document.getElementById('progFill').style.width=(qi/Q.length*100)+'%';
+  document.getElementById('unitBadge').textContent=q.u;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qNum').textContent=qi+1;
+  document.getElementById('sc').textContent=correct;
+  document.getElementById('sw').textContent=wrong;
+  document.getElementById('ss').textContent=skipped;
+  const ow=document.getElementById('optionsWrap');
+  ow.innerHTML='';
+  ['A','B','C','D'].forEach((l,idx)=>{
+    const d=document.createElement('div');
+    d.className='option'; d.setAttribute('data-l',l);
+    d.textContent=q.o[idx];
+    d.onclick=()=>checkAns(d,idx);
+    ow.appendChild(d);
+  });
+}
+
+/* ── CHECK ── */
+function checkAns(el,idx){
+  if(locked)return; locked=true;
+  const q=Q[qi];
+  document.querySelectorAll('.option').forEach(o=>{o.onclick=null;o.classList.add('locked');});
+  if(idx===q.a){el.classList.add('correct');correct++;beep('correct');showToast('✅ सही उत्तर!');}
+  else{el.classList.add('wrong');document.querySelectorAll('.option')[q.a].classList.add('correct');wrong++;beep('wrong');showToast('❌ गलत उत्तर!');}
+  if(!catStats[q.u]) catStats[q.u]={c:0,t:0};
+  catStats[q.u].t++;
+  if(idx===q.a) catStats[q.u].c++;
+  const eb=document.getElementById('explainBox');
+  eb.classList.remove('hidden');
+  eb.innerHTML='<strong>💡 व्याख्या:</strong> '+q.e;
+  setTimeout(()=>eb.classList.add('show'),40);
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+
+/* ── SKIP / NEXT ── */
+function skipQ(){if(locked)return;skipped++;beep('skip');showToast('⏭ Skip गरियो');advance();}
+function nextQ(){advance();}
+function advance(){qi++;if(qi>=Q.length){showResult();return;}loadQ();}
+
+/* ── RESULT ── */
+function showResult(){
+  clearInterval(timerInt);
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('resultScreen').classList.remove('hidden');
+  const neg=(wrong*0.2).toFixed(2);
+  const marks=Math.max(0,correct-parseFloat(neg)).toFixed(2);
+  const pct=Math.max(0,(marks/Q.length*100)).toFixed(1);
+  document.getElementById('rC').textContent=correct;
+  document.getElementById('rW').textContent=wrong;
+  document.getElementById('rS').textContent=skipped;
+  document.getElementById('rN').textContent=neg;
+  document.getElementById('marksDisplay').textContent=`🎯 ${marks} / ${Q.length} अंक`;
+  document.getElementById('donutPct').textContent=pct+'%';
+  const circ=2*Math.PI*60;
+  setTimeout(()=>document.getElementById('donutFg').setAttribute('stroke-dasharray',`${(pct/100)*circ} ${circ}`),100);
+  const r=pct<40?'❌ अझै धेरै मेहनत चाहिन्छ। प्रत्येक एकाइ राम्ररी पढ्नुस्।':
+           pct<55?'⚠️ राम्रै प्रयास! कमजोर एकाइहरूमा ध्यान दिनुस्।':
+           pct<70?'✅ राम्रो! पास हुने सम्भावना उच्च छ।':
+           pct<85?'🌟 उत्कृष्ट! तयारी राम्रो छ।':'🏆 अद्भुत! लोकसेवाका लागि पूर्ण तयार!';
+  document.getElementById('remarkBox').textContent=r;
+  // Save to localStorage
+  try{
+    const hist=JSON.parse(localStorage.getItem('krishi_quiz_history')||'[]');
+    hist.push({name:'MCQ Quiz Session',date:new Date().toDateString(),type:'quiz',total:Q.length,correct,wrong,marks:parseFloat(marks),pct:parseFloat(pct)});
+    localStorage.setItem('krishi_quiz_history',JSON.stringify(hist));
+    const tk='krishi_today_'+new Date().toDateString();
+    const td=JSON.parse(localStorage.getItem(tk)||'{"q":0,"c":0,"w":0}');
+    td.q+=Q.length;td.c+=correct;td.w+=wrong;
+    localStorage.setItem(tk,JSON.stringify(td));
+  }catch(e){}
+  // Category breakdown
+  const bd=document.getElementById('catBreakdown');
+  bd.innerHTML='';
+  for(const[cat,s]of Object.entries(catStats)){
+    const cp=s.t>0?Math.round(s.c/s.t*100):0;
+    bd.innerHTML+=`<div class="cat-row"><div class="cat-row-top"><span class="cn">${cat}</span><span class="cq">${s.c}/${s.t} (${cp}%)</span></div><div class="cat-mini-bar"><div class="cat-mini-fill" style="width:${cp}%"></div></div></div>`;
+  }
+}
+
+/* ── TOAST ── */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1400);
+}
+</script>
+</body>
+</html>
